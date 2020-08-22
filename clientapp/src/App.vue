@@ -12,6 +12,9 @@
             </template>
             <template slot="end">
                 <b-navbar-item v-if="!isLoggedIn">
+                    Register
+                </b-navbar-item>
+                <b-navbar-item v-if="!isLoggedIn">
                     Login
                 </b-navbar-item>
                 <b-navbar-item v-if="isLoggedIn">
