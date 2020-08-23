@@ -11,6 +11,9 @@
                          placeholder="Enter a password">
                 </b-input>
             </b-field>
+            <b-button tag="input"
+                      native-type="submit"
+                      value="Register" />
         </form>
     </section>
 </template>
