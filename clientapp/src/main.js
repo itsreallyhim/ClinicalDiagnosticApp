@@ -7,12 +7,16 @@ import router from './router'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import store from "./store"
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import "./vee-validate";
 
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(Buefy);
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.component('ValidationObserver', ValidationObserver)
 
 
 
