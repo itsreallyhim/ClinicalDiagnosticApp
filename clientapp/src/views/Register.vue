@@ -22,7 +22,8 @@
             </ValidationProvider>
             <b-button tag="input"
                       native-type="submit"
-                      value="Register" />
+                      value="Register"
+                      v-on:click="handleSubmit(submit)" />
         </ValidationObserver>
     </section>
 </template>
