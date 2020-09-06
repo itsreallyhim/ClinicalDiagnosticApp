@@ -11,6 +11,9 @@
                 </b-navbar-item>
             </template>
             <template slot="end">
+                <b-navbar-item tag="router-link" :to="{name: 'Register'}" v-if="!isLoggedIn">
+                    Register
+                </b-navbar-item>
                 <b-navbar-item v-if="!isLoggedIn">
                     Login
                 </b-navbar-item>
