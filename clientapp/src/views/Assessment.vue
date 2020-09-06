@@ -1,41 +1,27 @@
 <template>
   <div>
-    <Question
-      v-model="item.value"
-      v-for="(item, index) in items"
-      :key="index"
-      :question="item"
-    />
+    <Question v-for="(item, index) in items" :key="index" :question="item" />
 
-    {{ items }}
+    <pre>
+      {{ items }}
+    </pre>
 
     Sum{{ pageTotal }}
   </div>
 </template>
 
 <script>
-import Question from "../components/Question";
-
+import Question from "@/components/Question";
+import PostureCheck from "../demo/PostureCheck";
 export default {
+  name: "Assessment",
   components: { Question },
   data() {
     return {
-      items: [
-        {
-          type: "Range",
-          value: null,
-          title: "Question 1",
-          description: "Description of Question 1.",
-        },
-        {
-          type: "Range",
-          value: null,
-          title: "Question 2",
-          description: "Description of Question 2",
-        },
-      ],
+      items: PostureCheck,
     };
   },
+
   computed: {
     pageTotal() {
       return this.items.reduce((sum, current) => (sum += current.value), 0);
