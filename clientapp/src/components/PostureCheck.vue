@@ -15,8 +15,21 @@
     </div>
     <div class="columns">
       <div class="column is-full">
-        <h3 class="subtitle">Rate your posture</h3>
-        <Range v-model="rangeValue" />
+        <h3 class="subtitle has-text-weight-bold	">
+          {{ question._params.question }}
+        </h3>
+        <Range :tags="question._params.tags" v-model="question.value" />
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column is-full">
+        <b-field label="Your Comments">
+          <b-input
+            type="textarea"
+            v-model="question.comments"
+            placeholder="Provide any comments here."
+          ></b-input>
+        </b-field>
       </div>
     </div>
   </section>
@@ -25,29 +38,23 @@
 <script>
 import ImageUpload from "../components/ImageUpload";
 import Range from "@/components/Range";
-
+import { QuestionModel } from "@/models/Question";
 export default {
-  data() {
-    return {
-      rangeValue: null,
-      image: null,
-    };
+  props: {
+    question: {
+      QuestionModel,
+      required: true,
+    },
   },
+
   components: {
     ImageUpload,
     Range,
   },
-  watch: {
-    rangeValue: function() {
-      this.$emit("input", this.rangeValue);
-    },
-    image() {
-      this.$emit("image", this.image);
-    },
-  },
+
   methods: {
     updateImage(image) {
-      this.image = image;
+      this.question.image = image;
     },
   },
 };
@@ -58,6 +65,9 @@ export default {
   border: 0.1rem solid #bdbdbd;
   border-radius: 0.5rem;
   width: 450px;
+}
+section {
+  max-width: 80%;
 }
 
 @media (max-width: 450px) {

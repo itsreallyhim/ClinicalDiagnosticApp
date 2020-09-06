@@ -11,7 +11,13 @@
       <b-button @click="resetCamera" v-if="image">Retry photo</b-button>
     </div>
     <div v-else>
-      <b-upload v-model="dropFiles" multiple drag-drop class="imgUpload">
+      <b-upload
+        v-if="!image"
+        v-model="dropFile"
+        drag-drop
+        class="imgUpload"
+        accept="image/*"
+      >
         <section class="section">
           <div class="content has-text-centered ">
             <p>
@@ -27,6 +33,7 @@
       <b-button v-if="supportsCamera" @click="useCamera = true"
         >Capture from camera instead</b-button
       >
+      <b-button v-if="image" @click="image = null">Reset Image</b-button>
     </div>
 
     <img :src="image" />
@@ -41,7 +48,7 @@ export default {
   components: { VueCamera },
   data() {
     return {
-      dropFiles: null,
+      dropFile: null,
       image: null,
       supportsCamera: false,
       useCamera: true,
@@ -50,6 +57,9 @@ export default {
   watch: {
     image() {
       this.$emit("image", this.image);
+    },
+    dropFile() {
+      this.capture(this.dropFile);
     },
   },
   mounted() {
