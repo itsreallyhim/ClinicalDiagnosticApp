@@ -7,7 +7,9 @@
       :question="item"
     />
 
-    {{ items }}
+    <pre>
+      {{ items }}
+    </pre>
 
     Sum{{ pageTotal }}
   </div>
@@ -32,6 +34,13 @@ export default {
           value: null,
           title: "Question 2",
           description: "Description of Question 2",
+        },
+        {
+          type: "PostureCheck",
+          value: null,
+          title: "Posture Check 1",
+          description: "Upload image and rate your posture.",
+          image: null,
         },
       ],
     };

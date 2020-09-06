@@ -1,14 +1,29 @@
 <template>
-  <b-field>
-    <b-radio-button
+  <div>
+    <b-field class="is-hidden-touch">
+      <b-radio-button
+        v-model="radioButton"
+        :native-value="item.value"
+        v-for="(item, index) in items"
+        :key="index"
+      >
+        <span>{{ item.name }}</span>
+      </b-radio-button>
+    </b-field>
+    <b-select
+      class="is-hidden-desktop"
+      expanded
+      placeholder="Select a value"
       v-model="radioButton"
-      :native-value="item.value"
-      v-for="(item, index) in items"
-      :key="index"
     >
-      <span>{{ item.name }}</span>
-    </b-radio-button>
-  </b-field>
+      <option
+        :native-value="item.value"
+        v-for="(item, index) in items"
+        :key="index"
+        >{{ item.name }}</option
+      >
+    </b-select>
+  </div>
 </template>
 
 <script>
@@ -33,7 +48,7 @@ export default {
   },
   data() {
     return {
-      radioButton: "",
+      radioButton: null,
     };
   },
   watch: {
@@ -44,4 +59,4 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped></style>
