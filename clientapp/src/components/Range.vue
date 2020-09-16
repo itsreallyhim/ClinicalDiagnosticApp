@@ -1,11 +1,12 @@
 <template>
   <div class="columns">
-    <div class="rangeSelect column is-four-fifths">
+    <div class="rangeSelect column ">
       <div class="tags">
         <span
           v-for="(tag, index) in tags"
           :key="index"
           :style="{ 'grid-column': tag.start + '/ span ' + tag.span }"
+          :class="tag.note != null ? 'tag' : ''"
         >
           {{ tag.note }}
         </span>
@@ -28,11 +29,13 @@
         v-model="radioButton"
       >
         <option
+          :value="item.value"
           :native-value="item.value"
           v-for="(item, index) in items"
           :key="index"
-          >{{ item.name }}</option
         >
+          {{ getTagNote(index) }} {{ item.name }}
+        </option>
       </b-select>
     </div>
     <span class="selectedValue column" v-if="radioButton"
@@ -87,6 +90,19 @@ export default {
       this.$emit("input", this.radioButton);
     },
   },
+  methods: {
+    getTagNote(index) {
+      let item = this.tags.filter((item) => {
+        return item.start + item.span - 2 >= index;
+      })[0];
+
+      if (item) {
+        return item.note + ": ";
+      } else {
+        return null;
+      }
+    },
+  },
 };
 </script>
 
@@ -105,5 +121,17 @@ export default {
   display: grid;
   grid-template-columns: repeat(11, 1fr);
   text-align: center;
+  margin-bottom: 0.2em;
+}
+span.tag {
+  white-space: normal;
+  height: 100%;
+  align-items: center;
+}
+
+@media screen and (max-width: 480px) {
+  .tags {
+    display: none;
+  }
 }
 </style>

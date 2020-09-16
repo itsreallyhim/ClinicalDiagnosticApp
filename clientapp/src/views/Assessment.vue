@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Question v-for="(item, index) in items" :key="index" :question="item" />
+    <Question
+      v-for="(item, index) in items"
+      :key="index"
+      :question="item"
+      :number="index + 1"
+    />
 
     <pre>
       {{ items }}

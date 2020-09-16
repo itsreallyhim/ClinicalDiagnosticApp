@@ -18,6 +18,14 @@
         <b-navbar-item tag="router-link" :to="{ path: '/assessment' }"
           >Assessment</b-navbar-item
         >
+        <b-navbar-item
+          tag="router-link"
+          v-for="(route, index) in routes"
+          :key="index"
+          :to="route.path"
+        >
+          {{ route.name }}
+        </b-navbar-item>
       </template>
       <template slot="end">
         <b-navbar-item
@@ -44,6 +52,7 @@
   </div>
 </template>
 <script>
+import router from "@/router";
 export default {
   computed: {
     year() {
@@ -51,6 +60,9 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
+    },
+    routes() {
+      return router.options.routes;
     },
   },
 };
