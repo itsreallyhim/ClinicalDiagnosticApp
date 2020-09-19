@@ -5,7 +5,6 @@ import Vuex from "vuex";
 import "es6-promise/auto";
 import router from "./router";
 import Buefy from "buefy";
-import "material-design-icons/iconfont/material-icons.css";
 import "buefy/dist/buefy.css";
 import store from "./store";
 import { ValidationProvider, ValidationObserver } from "vee-validate";

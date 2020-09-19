@@ -1,6 +1,7 @@
 ﻿import Vue from "vue";
 import Vuex from "vuex";
 
+import demoResult from "../demo/results";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -8,13 +9,27 @@ export default new Vuex.Store({
     cdat: null,
     loading: false,
     user: {
-      loggedIn: false,
-      profile: null,
+      loggedIn: true,
+      profile: {
+        name: "Mathias Everson",
+        dateOfBirth: new Date(1997, 8, 22),
+        sex: "M",
+        email: "mathias@mathiaseverson.com",
+      },
+      previousAssessment: [
+        {
+          type: "Clinical Diagnostic Audit",
+          results: demoResult,
+        },
+      ],
     },
   },
   mutations: {
     setLoading(state, loading) {
       state.loading = loading;
+    },
+    logout(state) {
+      state.user.loggedIn = false;
     },
   },
   getters: {
@@ -29,6 +44,9 @@ export default new Vuex.Store({
     },
     profile: (state) => {
       return state.user.profile;
+    },
+    previousAssessment: (state) => {
+      return state.user.previousAssessment;
     },
   },
   actions: {
