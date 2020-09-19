@@ -33,7 +33,7 @@
                           :question="item" />
             </div>
 
-            <div class="column is-one-quarter" style="height:1vh; position: sticky;">
+            <div class="column is-one-quarter" style="height: 1vh; position: sticky; top: 10px;">
                 <h1 class="title">Total Score {{ pageTotal }} / 150</h1>
             </div>
         </div>
