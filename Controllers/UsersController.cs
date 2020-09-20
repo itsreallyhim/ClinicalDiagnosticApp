@@ -61,7 +61,7 @@ namespace ClinicalDiagnosticApp.Controllers
             return Ok(new
             {
                 Id = user.Id,
-                //Username = user.UserName,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Token = tokenString

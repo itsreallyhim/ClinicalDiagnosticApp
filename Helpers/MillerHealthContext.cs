@@ -35,11 +35,18 @@ namespace ClinicalDiagnosticApp.Helpers
             {
                 entity.ToTable("Users", "Person");
 
+                entity.Property(e => e.EmailAddress)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FirstName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -47,11 +54,16 @@ namespace ClinicalDiagnosticApp.Helpers
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.PasswordHash).HasMaxLength(1024);
+                entity.Property(e => e.PasswordHash)
+                    .IsRequired()
+                    .HasMaxLength(1024);
 
-                entity.Property(e => e.PasswordSalt).HasMaxLength(1024);
+                entity.Property(e => e.PasswordSalt)
+                    .IsRequired()
+                    .HasMaxLength(1024);
 
                 entity.Property(e => e.UserName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
