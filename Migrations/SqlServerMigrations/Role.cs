@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ClinicalDiagnosticApp.Models
+namespace ClinicalDiagnosticApp.Migrations.SqlServerMigrations
 {
     public partial class Role
     {

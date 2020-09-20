@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ClinicalDiagnosticApp.Models;
+using ClinicalDiagnosticApp.Migrations.SqlServerMigrations;
 
-namespace ClinicalDiagnosticApp.Data
+namespace ClinicalDiagnosticApp.Helpers
 {
     public partial class MillerHealthContext : DbContext
     {
@@ -17,7 +17,7 @@ namespace ClinicalDiagnosticApp.Data
         }
 
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,27 +31,28 @@ namespace ClinicalDiagnosticApp.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<Users>(entity =>
             {
-                entity.ToTable("User", "Person");
-
-                entity.Property(e => e.EmailAddress)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FamilyName)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.ToTable("Users", "Person");
 
                 entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(200)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.MiddleName)
-                    .HasMaxLength(200)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PasswordHash).HasMaxLength(1024);
+
+                entity.Property(e => e.PasswordSalt).HasMaxLength(1024);
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
