@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ClinicalDiagnosticApp.Migrations.SqlServerMigrations
+﻿namespace ClinicalDiagnosticApp.Migrations.SqlServerMigrations
 {
-    public partial class Role
+    public static class Role
     {
-        public int Id { get; set; }
-        public string RoleName { get; set; }
+        public const string Admin = "Admin";
+        public const string Patient = "Patient";
+        public const string Doctor = "Doctor";
     }
 }

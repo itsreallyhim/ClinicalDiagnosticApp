@@ -12,9 +12,6 @@ namespace ClinicalDiagnosticApp.Models.Users
         public string LastName { get; set; }
 
         [Required]
-        public string Username { get; set; }
-
-        [Required]
         public string EmailAddress { get; set; }
 
         [Required]

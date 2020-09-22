@@ -38,10 +38,10 @@ namespace ClinicalDiagnosticApp.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(model.EmailAddress, model.Password);
 
             if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Email address or password is incorrect" });
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -49,7 +49,8 @@ namespace ClinicalDiagnosticApp.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -61,9 +62,10 @@ namespace ClinicalDiagnosticApp.Controllers
             return Ok(new
             {
                 Id = user.Id,
-                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Role = user.Role,
+                EmailAddress = user.EmailAddress,
                 Token = tokenString
             });
         }
@@ -88,6 +90,7 @@ namespace ClinicalDiagnosticApp.Controllers
             }
         }
 
+		[Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -99,6 +102,11 @@ namespace ClinicalDiagnosticApp.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
+            var currentUserId = int.Parse(User.Identity.Name);
+            if (id != currentUserId && !User.IsInRole(Role.Admin))
+            {
+                return Forbid();
+            }
             var user = _userService.GetById(id);
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);

@@ -9,8 +9,8 @@ namespace ClinicalDiagnosticApp.Migrations.SqlServerMigrations
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
-        public string UserName { get; set; }
         public string EmailAddress { get; set; }
+        public string Role { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
     }
