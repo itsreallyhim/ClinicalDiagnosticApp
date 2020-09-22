@@ -29,7 +29,12 @@ const routes = [
     path: "/assessment",
     name: "Assessment",
     component: () => import("../views/Assessment.vue"),
-  },
+    },
+    {
+        path: "/joint-assessment",
+        name: "JointAssessment",
+        component: () => import("@/views/JointAssessment.vue"),
+    },
 ];
 
 const router = new VueRouter({
