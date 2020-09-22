@@ -8,16 +8,24 @@
 
 <script>
 import Range from "../components/Range";
+import PostureCheck from "../components/PostureCheck";
+import { QuestionModel } from "../models/Question";
+
 export default {
-  components: { Range },
+  components: { Range, PostureCheck },
 
   props: {
     question: {
       Object,
       required: true,
+      default: () => new QuestionModel(),
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+section {
+  margin-bottom: 8em;
+}
+</style>
