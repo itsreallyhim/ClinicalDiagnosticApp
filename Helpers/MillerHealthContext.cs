@@ -16,21 +16,10 @@ namespace ClinicalDiagnosticApp.Helpers
         {
         }
 
-        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>(entity =>
-            {
-                entity.ToTable("Role", "Person");
-
-                entity.Property(e => e.RoleName)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.ToTable("Users", "Person");
@@ -62,9 +51,8 @@ namespace ClinicalDiagnosticApp.Helpers
                     .IsRequired()
                     .HasMaxLength(1024);
 
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                entity.Property(e => e.Role)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
             });
 

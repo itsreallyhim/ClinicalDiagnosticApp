@@ -8,7 +8,7 @@ namespace ClinicalDiagnosticApp.Services
 {
 	public interface IUserService
 	{
-		Users Authenticate(string username, string password);
+		Users Authenticate(string emailAddress, string password);
 		IEnumerable<Users> GetAll();
 		Users GetById(int id);
 		Users Create(Users user, string password);
@@ -26,15 +26,15 @@ namespace ClinicalDiagnosticApp.Services
 			_context = context;
 		}
 
-		public Users Authenticate(string username, string password)
+		public Users Authenticate(string emailAddress, string password)
 		{
-			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+			if (string.IsNullOrEmpty(emailAddress) || string.IsNullOrEmpty(password))
 				return null;
 
 
-			var user = _context.Users.SingleOrDefault(x => x.UserName == username);
+			var user = _context.Users.SingleOrDefault(x => x.EmailAddress == emailAddress);
 
-			// check if username exists
+			// check if user exists
 			if (user == null)
 				return null;
 
@@ -43,17 +43,18 @@ namespace ClinicalDiagnosticApp.Services
 				return null;
 
 			// authentication successful
-			return user;
+			return user.WithoutPassword();
 		}
 
 		public IEnumerable<Users> GetAll()
 		{
-			return _context.Users;
+			return _context.Users.WithoutPasswords();
 		}
 
 		public Users GetById(int id)
 		{
-			return _context.Users.Find(id);
+			var user = _context.Users.FirstOrDefault(nc => nc.Id == id);
+			return user.WithoutPassword();
 		}
 
 		public Users Create(Users user, string password)
@@ -62,8 +63,8 @@ namespace ClinicalDiagnosticApp.Services
 			if (string.IsNullOrWhiteSpace(password))
 				throw new AppException("Password is required");
 
-			if (_context.Users.Any(x => x.UserName == user.UserName))
-				throw new AppException("Username \"" + user.UserName + "\" is already taken");
+			if (_context.Users.Any(x => x.EmailAddress == user.EmailAddress))
+				throw new AppException("This email address has already been registered to an account");
 
 			byte[] passwordHash, passwordSalt;
 			CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -84,14 +85,14 @@ namespace ClinicalDiagnosticApp.Services
 			if (user == null)
 				throw new AppException("User not found");
 
-			// update username if it has changed
-			if (!string.IsNullOrWhiteSpace(userParam.UserName) && userParam.UserName != user.UserName)
+			// update email address if it has changed
+			if (!string.IsNullOrWhiteSpace(userParam.EmailAddress) && userParam.EmailAddress != user.EmailAddress)
 			{
-				// throw error if the new username is already taken
-				if (_context.Users.Any(x => x.UserName == userParam.UserName))
-					throw new AppException("Username " + userParam.UserName + " is already taken");
+				// throw error if the new email address is already taken
+				if (_context.Users.Any(x => x.EmailAddress == userParam.EmailAddress))
+					throw new AppException("This email address has already been registered to an account");
 
-				user.UserName = userParam.UserName;
+				user.EmailAddress = userParam.EmailAddress;
 			}
 
 			// update user properties if provided
@@ -100,9 +101,6 @@ namespace ClinicalDiagnosticApp.Services
 
 			if (!string.IsNullOrWhiteSpace(userParam.LastName))
 				user.LastName = userParam.LastName;
-
-			if (!string.IsNullOrWhiteSpace(userParam.EmailAddress))
-				user.EmailAddress = userParam.EmailAddress;
 
 			// update password if provided
 			if (!string.IsNullOrWhiteSpace(password))
