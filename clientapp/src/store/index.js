@@ -2,6 +2,9 @@
 import Vuex from "vuex";
 
 import demoResult from "../demo/results";
+
+import { authentication } from './authentication.module';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -55,4 +58,7 @@ export default new Vuex.Store({
       fetch("/cdat");
     },
   },
+    modules: {
+        authentication
+    }
 });
