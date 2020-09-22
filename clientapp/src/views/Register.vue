@@ -106,9 +106,9 @@
             };
         },
         methods: {
-            ...mapActions('account', ['register']),
+            ...mapActions('authentication', ['register']),
             submit() {
-                this.$store.dispatch('account/register', this.user);
+                this.$store.dispatch('authentication/register', this.user);
             },
         },
     };
