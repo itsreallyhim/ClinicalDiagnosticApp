@@ -25,14 +25,6 @@
 
                         <hr />
 
-                        <ValidationProvider rules="required" name="Username" v-slot="{ errors, valid }">
-                            <b-field label="Username"
-                                     :type="{ 'is-danger': errors[0], 'is-success': valid }"
-                                     :message="errors">
-                                <b-input v-model="user.username" />
-                            </b-field>
-                        </ValidationProvider>
-
                         <div class="my-4">
                             <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }" vid="EmailAddress">
                                 <b-field label="Email"
@@ -98,7 +90,6 @@
                 user: {
                     firstName: '',
                     lastName: '',
-                    username: '',
                     emailaddress: '',
                     password: '',
 
