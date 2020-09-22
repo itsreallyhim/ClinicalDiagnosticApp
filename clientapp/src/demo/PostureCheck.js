@@ -106,70 +106,100 @@ export default [
       right leg straight and flat on the floor. `,
     params: BotWall,
   }),
+
   new QuestionModel({
-    type: "PostureCheck",
-    title: "Right buttock function test – front on",
+    type: "QuestionHeading",
+    title: "Right buttock function test",
     description: `Can you sit up exceptionally straight with your legs crossed; left leg under the right, right leg over the left
     and hands clasped behind your back?`,
-    params: {
-      question:
-        "Give yourself a personal rating of how well you performed the task.",
-      tags: [
-        { start: 1, span: 6, note: "Couldn't do it - fell over backwards." },
-        { start: 7, span: 2, note: "Leadning to one side" },
-        { start: 9, span: 1, note: null },
-        { start: 10, span: 2, note: "Sitting up straight" },
-      ],
-    },
-  }),
-  new QuestionModel({
-    type: "PostureCheck",
-    title: "Right buttock test - side on",
-    params: {
-      question:
-        "Give yourself a personal rating of how well you performed the task.",
-      tags: [
-        { start: 1, span: 6, note: "Couldn't do it - fell over backwards." },
-        { start: 7, span: 2, note: "Only just. Back in a 'C' shape." },
-        {
-          start: 9,
-          span: 2,
-          note: "Easy and up straight with hollow in lumbar spine.",
+    children: [
+      new QuestionModel({
+        type: "PostureCheck",
+        title: "Right buttock test - front on",
+        params: {
+          question:
+            "Give yourself a personal rating of how well you performed the task.",
+          tags: [
+            {
+              start: 1,
+              span: 6,
+              note: "Couldn't do it - fell over backwards.",
+            },
+            { start: 7, span: 2, note: "Leadning to one side" },
+            { start: 9, span: 1, note: null },
+            { start: 10, span: 2, note: "Sitting up straight" },
+          ],
         },
-      ],
-    },
+      }),
+      new QuestionModel({
+        type: "PostureCheck",
+        title: "Right buttock test - side on",
+        params: {
+          question:
+            "Give yourself a personal rating of how well you performed the task.",
+          tags: [
+            {
+              start: 1,
+              span: 6,
+              note: "Couldn't do it - fell over backwards.",
+            },
+            { start: 7, span: 2, note: "Only just. Back in a 'C' shape." },
+            {
+              start: 9,
+              span: 2,
+              note: "Easy and up straight with hollow in lumbar spine.",
+            },
+          ],
+        },
+      }),
+    ],
   }),
+
   new QuestionModel({
-    type: "PostureCheck",
-    title: "Left buttock function test – front on",
+    type: "QuestionHeading",
+    title: "Left buttock function test",
     description: `Can you sit up exceptionally straight with your legs crossed; right leg under the left, Left leg over the right
     and hands clasped behind your back?`,
-    params: {
-      question:
-        "Give yourself a personal rating of how well you performed the task.",
-      tags: [
-        { start: 1, span: 6, note: "Couldn't do it - fell over backwards." },
-        { start: 7, span: 2, note: "Leadning to one side" },
-        { start: 9, span: 1, note: null },
-        { start: 10, span: 2, note: "Sitting up straight" },
-      ],
-    },
-  }),
-  new QuestionModel({
-    type: "PostureCheck",
-    title: "Left buttock test - side on",
-    params: {
-      question:
-        "Give yourself a personal rating of how well you performed the task.",
-      tags: [
-        { start: 1, span: 6, note: "Couldn't do it - fell over backwards." },
-        { start: 7, span: 2, note: "Only just. Back in a 'C' shape." },
-        {
-          start: 9,
-          span: 2,
-          note: "Easy and up straight with hollow in lumbar spine.",
+    children: [
+      new QuestionModel({
+        type: "PostureCheck",
+        title: "Front On",
+        params: {
+          question:
+            "Give yourself a personal rating of how well you performed the task.",
+          tags: [
+            {
+              start: 1,
+              span: 6,
+              note: "Couldn't do it - fell over backwards.",
+            },
+            { start: 7, span: 2, note: "Leadning to one side" },
+            { start: 9, span: 1, note: null },
+            { start: 10, span: 2, note: "Sitting up straight" },
+          ],
         },
-      ],
-    },
+      }),
+      new QuestionModel({
+        type: "PostureCheck",
+        title: "Side on",
+        params: {
+          question:
+            "Give yourself a personal rating of how well you performed the task.",
+          tags: [
+            {
+              start: 1,
+              span: 6,
+              note: "Couldn't do it - fell over backwards.",
+            },
+            { start: 7, span: 2, note: "Only just. Back in a 'C' shape." },
+            {
+              start: 9,
+              span: 2,
+              note: "Easy and up straight with hollow in lumbar spine.",
+            },
+          ],
+        },
+      }),
+    ],
   }),
 ];
