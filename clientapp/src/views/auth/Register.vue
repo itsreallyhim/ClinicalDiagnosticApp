@@ -64,7 +64,7 @@
 
             <b-button tag="router-link"
                       native-type="submit"
-                      to="/login">
+                      :to="{ path: '/auth/login' }">
                 Already Registered? Log in
             </b-button>
         </div>
