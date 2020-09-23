@@ -92,14 +92,13 @@
                     lastName: '',
                     emailaddress: '',
                     password: '',
-
                 },
             };
         },
         methods: {
             ...mapActions('authentication', ['register']),
             submit() {
-                this.$store.dispatch('authentication/register', this.user);
+                this.register(this.user);
             },
         },
     };
