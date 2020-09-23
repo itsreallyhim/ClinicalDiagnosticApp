@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Register from "../views/Register.vue";
+import Register from "@/views/auth/Register.vue";
 import Login from "@/views/auth/Login.vue";
 import Auth from "@/views/Auth.vue";
 import PreviousAssesment from "../views/profile/PreviousAssessment.vue";
@@ -27,11 +27,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
     inNav: true,
-  },
-  {
-    path: "/register",
-    name: "Register",
-    component: Register,
   },
   {
     path: "/assessment",
@@ -80,6 +75,11 @@ const routes = [
         path: "login",
         name: "Login",
         component: Login,
+      },
+      {
+        path: "register",
+        name: "Register",
+        component: Register,
       },
     ],
   },
