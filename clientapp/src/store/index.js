@@ -51,7 +51,7 @@ export default new Vuex.Store({
       fetch("/cdat");
     },
   },
-    modules: {
-        authentication
-    }
+  modules: {
+    authentication
+  }
 });
