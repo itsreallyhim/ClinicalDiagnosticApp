@@ -1,14 +1,18 @@
 ﻿import { userService } from '../services';
-
-const user = JSON.parse(localStorage.getItem('user'));
-const state = {
-    user: user
-}
+import router from '@/router';
 
 export const authentication = {
     namespaced: true,
 
-    state: user,
+    state: {
+        token: localStorage.getItem('token') || '',
+        status: ''
+    },
+
+    getters: {
+        loggedIn: state => !!state.token,
+        authStatus: state => state.status,
+    },
 
     actions: {
         register({ commit }, user) {
@@ -24,14 +28,31 @@ export const authentication = {
                             reject(error);
                         }
                     )
-            },
-            )
+            })
+        },
+        login({ commit }, payload) {
+            return userService.login(payload)
+                .then(res => {
+                    commit("setToken", res.data.token);
+                    router.push('/');
+                })
+        },
+        logout({ commit }) {
+            commit("clearUser");
         }
     },
 
     mutations: {
-        registerRequest(user) {
+        registerRequest(state, user) {
             state.user = user;
+        },
+        setToken(state, token) {
+            state.token = token;
+            window.localStorage.setItem("token", token);
+        },
+        clearUser() {
+            window.localStorage.clear();
+            location.reload();
         }
     },
 };
