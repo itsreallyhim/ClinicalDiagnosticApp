@@ -12,7 +12,6 @@ export default new Vuex.Store({
     cdat: null,
     loading: false,
     user: {
-      loggedIn: true,
       profile: {
         name: "Mathias Everson",
         dateOfBirth: new Date(1997, 8, 22),
@@ -31,9 +30,6 @@ export default new Vuex.Store({
     setLoading(state, loading) {
       state.loading = loading;
     },
-    logout(state) {
-      state.user.loggedIn = false;
-    },
   },
   getters: {
     cdat: (state) => {
@@ -41,9 +37,6 @@ export default new Vuex.Store({
     },
     loading: (state) => {
       return state.loading;
-    },
-    isLoggedIn: (state) => {
-      return state.user.loggedIn;
     },
     profile: (state) => {
       return state.user.profile;
