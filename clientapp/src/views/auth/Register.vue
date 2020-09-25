@@ -30,7 +30,7 @@
     </div>
 
     <div class="my-4">
-      <ValidationProvider rules="required"
+      <ValidationProvider rules="required|password"
                           vid="password"
                           name="Password"
                           v-slot="{ errors, valid }">
