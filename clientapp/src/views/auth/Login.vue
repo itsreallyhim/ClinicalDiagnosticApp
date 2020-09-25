@@ -1,65 +1,61 @@
 <template>
-  <div>
-      <!-- <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.3.45/css/materialdesignicons.min.css"> -->
-
     <ValidationObserver ref="observer" v-slot="{ handleSubmit, invalid }">
-      <form action="#" @submit.prevent="handleSubmit(login)">
-        <ValidationProvider
-          rules="username|required"
-          name="Username"
-          v-slot="{ errors, valid }"
-        >
-          <b-field
-            label="Username"
-            :type="valid ? 'is-success' : 'is-danger'"
-            :message="errors"
-          >
-            <b-input v-model="user.username"></b-input>
-          </b-field>
-        </ValidationProvider>
-        <ValidationProvider
-          rules="required|password"
-          name="Password"
-          v-slot="{ errors, valid }"
-        >
-          <b-field
-            label="Password"
-            :type="valid ? 'is-success' : 'is-danger'"
-            :message="errors"
-          >
-            <b-input
-              v-model="user.password"
-              aria-autocomplete="password"
-              type="password"
-              :password-reveal="true"
-            ></b-input>
-          </b-field>
-        </ValidationProvider>
 
-        <b-button :disabled="invalid" type="submit" native-type="submit">
-          Login
-        </b-button>
-        {{ invalid }}
-      </form>
+        <div class="my-4">
+            <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }" vid="EmailAddress">
+                <b-field label="Email"
+                         :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                         :message="errors">
+                    <b-input type="email" v-model="user.emailaddress" />
+                </b-field>
+            </ValidationProvider>
+        </div>
+
+        <div class="my-4">
+            <ValidationProvider rules="required|password"
+                                name="Password"
+                                v-slot="{ errors, valid }">
+                <b-field label="Password"
+                         :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                         :message="errors">
+                    <b-input v-model="user.password"
+                             aria-autocomplete="password"
+                             type="password"
+                             :password-reveal="true"></b-input>
+                </b-field>
+            </ValidationProvider>
+        </div>
+
+        <b-button tag="input"
+                  type="is-link"
+                  native-type="submit"
+                  value="Login"
+                  v-on:click="handleSubmit(submit)" />
     </ValidationObserver>
-  </div>
 </template>
 
 <script>
-export default {
-  name: "Login",
-  data() {
-    return {
-      user: { username: null, password: null },
+    import { mapActions, mapState } from 'vuex';
+    export default {
+        name: "Login",
+        data() {
+            return {
+                user: {
+                    username: null,
+                    password: null
+                },
+            };
+        },
+        computed: {
+            ...mapState('authentication', ['status'])
+        },
+        methods: {
+            ...mapActions('authentication', ['login']),
+            submit() {
+                this.login(this.user);
+            },
+        },
     };
-  },
-  methods: {
-    login() {
-      alert("Logging in");
-      this.$store.commit("login", this.user);
-    },
-  },
-};
 </script>
 
 <style></style>
