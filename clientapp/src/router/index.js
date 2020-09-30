@@ -94,7 +94,7 @@ const router = new VueRouter({
 const protectedRoutes = ["Profile", "Assessment"];
 
 router.beforeEach((to, from, next) => {
-  if (!store.getters.isLoggedIn && protectedRoutes.includes(to.name)) {
+  if (!store.getters.loggedIn && protectedRoutes.includes(to.name)) {
     /* eslint-disable-next-line no-console */
     console.log("Protected");
   }
