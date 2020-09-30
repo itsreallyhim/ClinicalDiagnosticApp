@@ -1,6 +1,5 @@
 ﻿<template>
   <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-
     <ValidationProvider rules="required" name="First Name" v-slot="{ errors, valid }">
       <b-field label="First Name"
                :type="{ 'is-danger': errors[0], 'is-success': valid }"
@@ -55,6 +54,32 @@
         </b-field>
       </ValidationProvider>
     </div>
+
+    <div class="my-4">
+      <ValidationProvider rules='required'
+                          name="Role"
+                          v-slot="{ errors }">
+        <b-field label="Role"
+                 :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                 :message="errors">
+          <b-select icon="account" placeholder="Select a role" v-model="user.role" expanded>
+            <option value="patient">Patient</option>
+            <option value="doctor">Doctor</option>
+          </b-select>
+        </b-field>
+      </ValidationProvider>
+    </div>
+
+    <div class="my-4">
+      <ValidationProvider rules="required" name="Code" v-slot="{ errors, valid }">
+        <b-field label="Code"
+                 :type="{ 'is-danger': errors[0], 'is-success': valid }"
+                 :message="errors">
+          <b-input v-model="registrationCode" />
+        </b-field>
+      </ValidationProvider>
+    </div>
+
     <div class="buttons has-addons is-grouped">
       <b-button tag="input"
                 type="is-link"
@@ -69,6 +94,7 @@
       </b-button>
     </div>
   </ValidationObserver>
+
 </template>
 
 <script>
@@ -83,13 +109,16 @@
           lastName: '',
           emailaddress: '',
           password: '',
+          role: null
         },
+        registrationCode: ''
       };
     },
     methods: {
       ...mapActions('authentication', ['register']),
       submit() {
-        this.register(this.user);
+        this.$emit('clicked', true);
+        //this.register(this.user);
       },
     },
   };
