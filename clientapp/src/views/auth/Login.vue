@@ -21,7 +21,7 @@
           <b-input v-model="user.password"
                    aria-autocomplete="password"
                    type="password"
-                   :password-reveal="true"></b-input>
+                   password-reveal />
         </b-field>
       </ValidationProvider>
     </div>
@@ -30,7 +30,8 @@
               type="is-link"
               native-type="submit"
               value="Login"
-              v-on:click="handleSubmit(submit)" />
+              v-on:click="handleSubmit(submit)"
+              expanded />
   </ValidationObserver>
 </template>
 
