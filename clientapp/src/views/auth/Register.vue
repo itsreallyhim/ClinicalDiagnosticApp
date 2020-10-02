@@ -1,22 +1,5 @@
 ﻿<template>
   <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
-    <ValidationProvider rules="required" name="First Name" v-slot="{ errors, valid }">
-      <b-field label="First Name"
-               :type="{ 'is-danger': errors[0], 'is-success': valid }"
-               :message="errors">
-        <b-input v-model="user.firstName" />
-      </b-field>
-    </ValidationProvider>
-
-    <ValidationProvider rules="required" name="Last Name" v-slot="{ errors, valid }">
-      <b-field label="Last Name"
-               :type="{ 'is-danger': errors[0], 'is-success': valid }"
-               :message="errors">
-        <b-input v-model="user.lastName" />
-      </b-field>
-    </ValidationProvider>
-
-    <hr />
 
     <div class="my-4">
       <ValidationProvider rules="required|email" name="Email" v-slot="{ errors, valid }" vid="EmailAddress">
@@ -117,8 +100,16 @@
     methods: {
       ...mapActions('authentication', ['register']),
       submit() {
+      /* eslint-disable no-console */
         this.$emit('clicked', true);
-        //this.register(this.user);
+        this.register(this.user)
+          .then(resp => {
+            console.log(resp);
+          })
+          .catch(error => {
+            this.$emit('clicked', false);
+            console.log(error);
+          });
       },
     },
   };
