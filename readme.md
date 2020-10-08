@@ -35,11 +35,21 @@ Scaffold-DbContext "Server=miller-health.database.windows.net;Database=MillerHea
 ### Add the connection string to the secret manager
 1. Right click on the ClinicalDiagnosticApp project in the solution explorer
 2. Select 'Manage User Secrets'
+#### SQL Server
 3. Add the following: (replace NAME and PASSWORD with your user id and password)
 ```
 {
   "ConnectionStrings": {
     "Database": "Server=miller-health.database.windows.net;Database=MillerHealth;User Id=NAME;Password=PASSWORD"
+  }
+}
+```
+#### MYSQL
+3. Add the following, or replace the SQL Database string
+```
+{
+  "ConnectionStrings": {
+    "Database": "server=hostname;port=3306;user=username;password=password;database=database"
   }
 }
 ```
