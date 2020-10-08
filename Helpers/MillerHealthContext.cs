@@ -18,6 +18,10 @@ namespace ClinicalDiagnosticApp.Helpers
 
         public virtual DbSet<Users> Users { get; set; }
 
+        public virtual DbSet<Assessments> Assessments { get; set; }
+
+        public virtual DbSet<AssessmentResponses> AssessmentResponses { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Users>(entity =>
