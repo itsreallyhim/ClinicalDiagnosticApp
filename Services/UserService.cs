@@ -72,6 +72,8 @@ namespace ClinicalDiagnosticApp.Services
 			user.PasswordHash = passwordHash;
 			user.PasswordSalt = passwordSalt;
 
+			user.Role = Role.Patient;
+
 			_context.Users.Add(user);
 			_context.SaveChanges();
 
