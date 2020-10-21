@@ -8,7 +8,7 @@
           <!-- Heroicon name: scale -->
           <slot name="icon">
             <svg
-              class="h-6 w-6 text-cool-gray-400"
+              class="h-6 w-6 text-cool-gray-400 hidden"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -23,15 +23,15 @@
             </svg>
           </slot>
         </div>
-        <div class="sm:ml-5 ">
+        <div class="">
           <dl>
-            <dt class="text-sm leading-7 font-medium text-cool-gray-900">
+            <dt class="text-sm leading-7 font-medium ">
               <router-link :to="to">
                 <slot name="title"></slot>
               </router-link>
             </dt>
             <dd>
-              <div class="text-xs leading-5 font-medium text-cool-gray-500 ">
+              <div class="text-xs leading-5 font-medium  ">
                 <slot name="description"></slot>
               </div>
             </dd>

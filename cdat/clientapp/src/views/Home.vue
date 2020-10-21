@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <card :to="{ name: 'Login' }" v-if="!isLoggedIn">
+  <div class="grid grid-cols-2 gap-8">
+    <card :to="{ name: 'Login' }" v-if="!isLoggedIn" class="col-span-2">
       <template #icon>
         <img
           class="max-w-xs w-full"
@@ -15,12 +15,27 @@
       >
       <template #link>Login Now</template>
     </card>
-    <card :to="{ name: 'Assessments' }" v-if="isLoggedIn">
+    <card
+      class="col-span-2 bg-blue text-white"
+      :to="{ name: 'Assessments' }"
+      v-if="isLoggedIn"
+    >
       <template #title>Welcome, {{ user.displayName }}</template>
       <template #description
         >Please complete the Clinical Diagnostic Assessment</template
       >
       <template #link>View Assessments</template>
+    </card>
+    <card
+      :to="{ name: 'Previous Assessments' }"
+      v-if="isLoggedIn && previousAssessments.length > 0"
+    >
+      <template #title>Your Previous Assessments</template>
+      <template #description
+        >You have completed
+        {{ previousAssessments.length }} assessments.</template
+      >
+      <template #link>View Completed Assessments</template>
     </card>
 
     <card :to="{ name: 'Profile' }" v-if="profile == null">
@@ -41,7 +56,7 @@ export default {
     Card,
   },
   computed: {
-    ...mapGetters("user", ["profile"]),
+    ...mapGetters("user", ["profile", "previousAssessments"]),
     ...mapGetters("auth", ["user", "isLoggedIn"]),
   },
 };

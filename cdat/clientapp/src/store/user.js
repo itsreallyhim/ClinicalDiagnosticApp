@@ -25,7 +25,12 @@ const actions = {
     const user = firebase.auth().currentUser;
     return bindFirestoreRef(
       "previousAssessments",
-      db.collection("responses").where("owner", "==", `/users/${user.uid}`)
+      db
+        .collection("responses")
+        .where("owner", "==", db.doc(`/users/${user.uid}`)),
+      {
+        maxRefDepth: 4,
+      }
     );
   }),
   setProfile(profile) {

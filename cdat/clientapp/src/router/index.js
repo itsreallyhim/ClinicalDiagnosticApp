@@ -74,6 +74,14 @@ const routes = [
           guest: false,
         },
       },
+      {
+        name: "Previous Assessments",
+        component: () => import("@/views/profile/PreviousAssessments.vue"),
+        path: "previous-assessments",
+        meta: {
+          guest: false,
+        },
+      },
     ],
     meta: {
       guest: false,

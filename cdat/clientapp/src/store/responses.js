@@ -27,19 +27,21 @@ const actions = {
     commit("SET_USER", uid);
   },
   saveResponse: async ({ commit, state }) => {
-    await db.collection("responses").add({
-      assessment: `/assessment/${state.currentResponse.assessment}`,
-      owner: `/users/${state.currentResponse.owner}`,
+    let responseItem = {
+      assessment: db.doc(`assessments/${state.currentResponse.assessment}`),
+      owner: db.doc(`/users/${state.currentResponse.owner}`),
       responses: state.currentResponse.responses,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    };
+    console.log(responseItem);
+    await db.collection("responses").add(responseItem);
     commit("SET_STATUS", "Saved");
   },
 };
 
 const mutations = {
   SET_ANSWER(state, answer) {
-    let formatQuestion = `/questions/${answer.question}`;
+    let formatQuestion = db.doc(`/questions/${answer.question}`);
     let item = state.currentResponse.responses.find(
       (x) => x.question == formatQuestion
     );
