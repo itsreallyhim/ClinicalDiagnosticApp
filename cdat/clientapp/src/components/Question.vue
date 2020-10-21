@@ -36,6 +36,8 @@ import Nested from "@/components/question_type/Nested.vue";
 import Number from "@/components/question_type/Number.vue";
 import Kilos from "@/components/question_type/Kilos.vue";
 import Percent from "@/components/question_type/Percent.vue";
+import Posture from "@/components/question_type/Posture.vue";
+
 import { mapMutations } from "vuex";
 export default {
   name: "Question",
@@ -43,6 +45,7 @@ export default {
   components: {
     Scale,
     ScaleMeta,
+    Posture,
     Nested,
     Number,
     Kilos,

@@ -5,3 +5,4 @@ import Number from "@/components/question_type/Number.vue";
 import Kilos from "@/components/question_type/Kilos.vue";
 import Percent from "@/components/question_type/Percent.vue";
 export { Scale, ScaleMeta, Nested, Number, Kilos, Percent };
+ 

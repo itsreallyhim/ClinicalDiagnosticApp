@@ -6,6 +6,7 @@ import App from "./App.vue";
 // import { db } from "@/db";
 import "@/firebase";
 import "@/auth";
+import "@/storage";
 import "@/assets/style.css";
 
 import { firestorePlugin } from "vuefire";

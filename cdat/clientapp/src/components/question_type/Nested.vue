@@ -26,6 +26,8 @@ import Number from "@/components/question_type/Number.vue";
 import Kilos from "@/components/question_type/Kilos.vue";
 import Percent from "@/components/question_type/Percent.vue";
 import TextResponse from "@/components/question_type/TextResponse.vue";
+import Posture from "@/components/question_type/Posture.vue";
+
 export default {
   name: "Nested",
   props: ["questions"],
@@ -33,6 +35,7 @@ export default {
     Kilos,
     Number,
     Scale,
+    Posture,
     ScaleMeta,
     Percent,
     TextResponse,
