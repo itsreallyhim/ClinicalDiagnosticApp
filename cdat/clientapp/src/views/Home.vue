@@ -38,7 +38,7 @@
       <template #link>View Completed Assessments</template>
     </card>
 
-    <card :to="{ name: 'Profile' }" v-if="profile == null">
+    <card :to="{ name: 'Profile' }" v-if="profile == null && isLoggedIn">
       <template #title>Complete your Profile</template>
       <template #description>Please complete your profile.</template>
       <template #link>Update your profile </template>
@@ -48,7 +48,7 @@
 
 <script>
 // @ is an alias to /src
-import Card from "@/layouts/Card.vue";
+import Card from /* webpackChunkName: "layout-card" */ "@/layouts/Card.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "Home",
