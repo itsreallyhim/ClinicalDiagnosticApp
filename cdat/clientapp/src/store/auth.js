@@ -25,10 +25,14 @@ const mutations = {
     }
   },
 };
+const getters = {
+  user: (state) => state.user,
+};
 
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters,
 };

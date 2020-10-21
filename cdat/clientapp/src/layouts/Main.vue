@@ -233,9 +233,9 @@
           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
               <img
-                class="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-on-white.svg"
-                alt="Workflow"
+                class="w-auto"
+                src="@/assets/global-back-care-logo.png"
+                alt="Global Back Care"
               />
             </div>
             <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
@@ -245,13 +245,6 @@
           <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
             <div class="flex-shrink-0 w-full group block">
               <div class="flex items-center">
-                <div>
-                  <img
-                    class="inline-block h-9 w-9 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
                 <div class="ml-3">
                   <p
                     class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900"

@@ -25,12 +25,12 @@
           <dl>
             <dt class="text-sm leading-7 font-medium text-cool-gray-900">
               <router-link :to="to">
-                {{ assessment.title }}
+                <slot name="title"></slot>
               </router-link>
             </dt>
             <dd>
               <div class="text-xs leading-5 font-medium text-cool-gray-500 ">
-                {{ assessment.description }}
+                <slot name="description"></slot>
               </div>
             </dd>
           </dl>
@@ -43,7 +43,7 @@
           :to="to"
           class="font-medium text-blue hover:text-blue transition ease-in-out duration-150"
         >
-          View Assessment
+          <slot name="link"></slot>
         </router-link>
       </div>
     </div>
@@ -52,16 +52,16 @@
 
 <script>
 export default {
-  name: "AssessmentCard",
+  name: "Card",
   props: {
     to: {
       String,
-      default: () => "/assessments",
+      default: () => "/",
     },
     assessment: {
       Object,
       default: () => ({
-        title: "Default Assessment",
+        title: "Default Title",
         description: "Default Description",
       }),
     },

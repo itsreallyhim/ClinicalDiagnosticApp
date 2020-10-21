@@ -6,6 +6,7 @@
   >
     <!-- Heroicon name: home -->
     <svg
+      v-if="false"
       class="mr-3 h-6 w-6 text-gray-500 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
