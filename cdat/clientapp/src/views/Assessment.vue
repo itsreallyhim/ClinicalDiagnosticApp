@@ -21,12 +21,26 @@
               {{ currentAssessment.description }}
             </p>
           </div>
-          <div class="mt-5 border-t border-gray-200 pt-5">
-            <dl>
-              <div v-for="(question, index) in currentQuestions" :key="index">
-                <question :questionmodel="question"></question>
-              </div>
-            </dl>
+
+          <div
+            class="transition duration-500 my-5 p-4 -mx-4 shadow-inner "
+            :class="
+              submitting
+                ? 'bg-gray-500 opacity-50  h-32  overflow-hidden pointer-events-none '
+                : 'h-auto'
+            "
+            :style="{
+              'transition-property':
+                'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, height',
+            }"
+          >
+            <div class="  border-gray-200 ">
+              <dl>
+                <div v-for="(question, index) in currentQuestions" :key="index">
+                  <question :questionmodel="question"></question>
+                </div>
+              </dl>
+            </div>
           </div>
           <button
             class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-indigo active:bg-blue transition duration-150 ease-in-out"
@@ -36,6 +50,17 @@
             {{ message }}
           </button>
         </form>
+        <div v-if="message == 'Saved'" class="mt-6">
+          <h3>Complete the other assessments</h3>
+          <div class="my-6 grid gap-6" v-if="otherAssessments != undefined">
+            <assessment-card
+              v-for="(assessment, index) in otherAssessments"
+              :to="`/assessments/${assessment.id}`"
+              :key="index"
+              :assessment="assessment"
+            ></assessment-card>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -44,26 +69,35 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import Question from "@/components/Question.vue";
+import AssessmentCard from "@/layouts/AssessmentCard.vue";
 
 export default {
   name: "AssessmentView",
   components: {
     Question,
+    AssessmentCard,
   },
   created() {
     this.updateAssessment();
   },
   data: () => ({
     submitting: false,
-    message: "Save Assessment",
+    message: "Save Response",
   }),
   watch: {
     $route: "updateAssessment",
     status: "updateStatus",
   },
   computed: {
-    ...mapGetters("assessments", ["currentAssessment", "currentQuestions"]),
+    ...mapGetters("assessments", [
+      "assessments",
+      "currentAssessment",
+      "currentQuestions",
+    ]),
     ...mapGetters("responses", ["responses", "currentResponse", "status"]),
+    otherAssessments() {
+      return this.assessments.filter((x) => x.id != this.$route.params.formID);
+    },
   },
   methods: {
     ...mapActions("assessments", ["setAssessment"]),
@@ -79,6 +113,7 @@ export default {
       this.submitting = true;
       this.message = "Saving";
       this.saveResponse();
+      this.submitting = false;
     },
   },
   beforeRouteLeave(to, from, next) {

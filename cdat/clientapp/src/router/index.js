@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "@/views/Login.vue";
 import Assessments from "@/views/Assessments";
 import Assessment from "@/views/Assessment";
-import Profile from "@/views/Profile";
+import Profile from "@/views/profile/Profile";
 
 import store from "@/store";
 
@@ -52,8 +52,12 @@ const routes = [
     },
     children: [
       {
+        name: "Assessment",
         path: ":formID",
         component: Assessment,
+        meta: {
+          guest: false,
+        },
       },
     ],
   },
@@ -61,6 +65,16 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+    children: [
+      {
+        name: "Update Profile",
+        component: () => import("@/views/profile/UpdateProfile.vue"),
+        path: "update",
+        meta: {
+          guest: false,
+        },
+      },
+    ],
     meta: {
       guest: false,
     },

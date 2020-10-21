@@ -1,7 +1,7 @@
 import firebase from "@/firebase";
 
 const state = {
-  user: {},
+  user: null,
   isLoggedIn: false,
 };
 
@@ -18,7 +18,7 @@ const actions = {
 const mutations = {
   setUser(state, user) {
     if (user == null) {
-      (state.user = {}), (state.isLoggedIn = false);
+      (state.user = null), (state.isLoggedIn = false);
     } else {
       state.user = user;
       state.isLoggedIn = true;
@@ -27,6 +27,7 @@ const mutations = {
 };
 const getters = {
   user: (state) => state.user,
+  isLoggedIn: (state) => state.isLoggedIn,
 };
 
 export default {

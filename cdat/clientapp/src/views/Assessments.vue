@@ -1,9 +1,9 @@
 <template>
   <div>
     <div
-      class="mb-6"
+      class="my-6 grid gap-6"
       v-if="assessments != undefined"
-      :class="assessments == undefined ? '' : 'grid grid-cols-3 gap-6'"
+      :class="$route.name == 'Assessments' ? ' sm:grid-cols-3' : 'hidden'"
     >
       <assessment-card
         v-for="(assessment, index) in assessments"

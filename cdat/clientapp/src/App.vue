@@ -8,7 +8,7 @@
           :menuitem="menuitem"
         ></menu-item>
       </template>
-      <template #user>
+      <template #user v-if="isLoggedIn">
         {{ user.displayName }}
       </template>
       <template #pagetitle>
@@ -38,17 +38,22 @@ export default {
         {
           to: { name: "Home" },
           name: "Home",
-          active: this.$route.name == "Home",
+          active: this.$route.name === "Home",
         },
         {
           to: { name: "About" },
           name: "About",
-          active: this.$route.name == "About",
+          active: this.$route.name === "About",
         },
         {
           to: { name: "Assessments" },
           name: "Assessments",
-          active: this.$route.name == "Assessments",
+          active: this.$route.name === "Assessments",
+        },
+        {
+          to: { name: "Profile" },
+          name: "Profile",
+          active: this.$route.name === "Profile",
         },
       ],
     };

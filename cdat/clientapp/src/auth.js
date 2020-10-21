@@ -14,6 +14,7 @@ firebase.auth().onAuthStateChanged((user) => {
       .doc(dbProfile.id)
       .set(dbProfile);
     store.commit("auth/setUser", dbProfile);
+    store.dispatch("user/linkProfile");
     if (router.currentRoute.name == "Login") {
       router.push("/");
     } else if ("formID" in router.currentRoute.params) {
@@ -24,5 +25,6 @@ firebase.auth().onAuthStateChanged((user) => {
     }
   } else {
     store.commit("auth/setUser", null);
+    router.push({ name: "Home" });
   }
 });

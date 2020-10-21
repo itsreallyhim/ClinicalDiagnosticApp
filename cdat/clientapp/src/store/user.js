@@ -1,27 +1,50 @@
 import db from "@/db";
 import firebase from "@/firebase";
 
+import { firestoreAction } from "vuexfire";
+
 const state = {
-  profile: {},
+  profile: null,
   previousAssessments: [],
 };
 
-const mutations = {
-  setProfile(state, profile) {
-    state.profile = profile;
-
+const actions = {
+  linkProfile({ dispatch }) {
+    dispatch("bindProfile");
+    dispatch("bindPreviousAssessments");
+  },
+  bindProfile: firestoreAction(({ bindFirestoreRef }) => {
     const user = firebase.auth().currentUser;
-    console.log("User", user.uid);
+
+    return bindFirestoreRef(
+      "profile",
+      db.collection("users").where("id", "==", user.uid)
+    );
+  }),
+  bindPreviousAssessments: firestoreAction(({ bindFirestoreRef }) => {
+    const user = firebase.auth().currentUser;
+    return bindFirestoreRef(
+      "previousAssessments",
+      db.collection("responses").where("owner", "==", `/users/${user.uid}`)
+    );
+  }),
+  setProfile(profile) {
+    const user = firebase.auth().currentUser;
+
     db.collection("users")
       .doc(user.uid)
       .update({ profile });
   },
 };
+const mutations = {
+  // SET_PROFILE(state, profile) {
+  //   state.profile = profile;
+  // },
+};
 
 const getters = {
-  profile(state) {
-    return state.profile;
-  },
+  profile: (state) => state.profile,
+  previousAssessments: (state) => state.previousAssessments,
 };
 
 export default {
@@ -29,4 +52,5 @@ export default {
   state,
   mutations,
   getters,
+  actions,
 };

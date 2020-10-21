@@ -4,7 +4,7 @@
   >
     <div class="p-5">
       <div class="flex items-center">
-        <div class="flex-shrink-0">
+        <div class="flex-shrink-0 mr-5 hidden">
           <!-- Heroicon name: scale -->
           <svg
             class="h-6 w-6 text-cool-gray-400"
@@ -21,7 +21,7 @@
             />
           </svg>
         </div>
-        <div class="ml-5 w-0 flex-1">
+        <div class=" w-0 flex-1">
           <dl>
             <dt class="text-sm leading-7 font-medium text-cool-gray-900">
               <router-link :to="to">
