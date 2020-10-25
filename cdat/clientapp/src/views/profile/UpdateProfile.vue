@@ -1,9 +1,9 @@
 <template>
   <div id="profile">
-    <div class="mt-6 bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+    <div class="px-4 py-5 mt-6 bg-white shadow sm:rounded-lg sm:p-6">
       <div class="md:grid md:grid-cols-3 md:gap-6">
         <div class="md:col-span-1">
-          <h3 class=" font-medium leading-6 text-gray-900">
+          <h3 class="font-medium leading-6 text-gray-900 ">
             Personal Information
           </h3>
           <p class="mt-1 text-xs leading-5 text-gray-500">
@@ -21,7 +21,7 @@
                 >
                 <span
                   id="email_address"
-                  class="mt-1  block w-full py-2 px-3   sm:text-xs sm:leading-5"
+                  class="block w-full px-3 py-2 mt-1 sm:text-xs sm:leading-5"
                   >{{ user.displayName }}</span
                 >
               </div>
@@ -34,7 +34,7 @@
                 >
                 <span
                   id="email_address"
-                  class="mt-1  block w-full py-2 px-3    sm:text-xs sm:leading-5"
+                  class="block w-full px-3 py-2 mt-1 sm:text-xs sm:leading-5"
                   >{{ user.email }}</span
                 >
               </div>
@@ -48,7 +48,7 @@
                 <select
                   v-model="profile.role"
                   id="role"
-                  class="mt-1 text-sm block form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-xs sm:leading-5"
+                  class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
                 >
                   <option value="patient">Patient</option>
                   <option value="practitioner">Practitioner</option>
@@ -65,13 +65,13 @@
                   v-model="profile.dateOfBirth"
                   id="dob"
                   type="date"
-                  class=" text-sm mt-1 form-input block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-xs sm:leading-5"
+                  class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
                 />
               </div>
             </div>
             <button
               type="submit"
-              class="max-w-sm mt-8 justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
+              class="justify-center max-w-sm px-4 py-2 mt-8 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
             >
               Save Profile
             </button>

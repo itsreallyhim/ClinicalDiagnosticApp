@@ -1,6 +1,6 @@
 <template>
   <div>
-    <number append="%" v-model="itemValue"></number>
+    <number append="%" step="1" v-model="itemValue"></number>
   </div>
 </template>
 

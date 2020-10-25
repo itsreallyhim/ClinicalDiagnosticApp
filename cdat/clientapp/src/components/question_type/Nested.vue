@@ -2,7 +2,7 @@
   <div class="">
     <div class="mb-8" v-for="(question, index) in questions" :key="index">
       <dt class="">
-        <h4 class="text-sm leading-5 font-medium">
+        <h4 class="text-sm font-medium leading-5">
           {{ question.title }}
         </h4>
         <p class="text-xs text-gray-500">{{ question.description }}</p>
@@ -12,6 +12,7 @@
           :is="question.question_type"
           :key="index"
           :question="question"
+          v-on:data="updateResponse({ question: question, data: $event })"
         >
         </component>
       </dd>
@@ -39,6 +40,26 @@ export default {
     ScaleMeta,
     Percent,
     TextResponse,
+  },
+  data: () => ({
+    responses: [],
+  }),
+  methods: {
+    updateResponse(value) {
+      let formatQuestion = value.question;
+      let item = this.responses.find((x) => x.question == formatQuestion);
+      if (item == undefined) {
+        this.responses.push({
+          question: formatQuestion,
+          answer: value.value,
+          data: value.data,
+        });
+      } else {
+        item.answer = value.answer;
+        item.data = value.data;
+      }
+      console.log(value);
+    },
   },
 };
 </script>

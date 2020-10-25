@@ -2,9 +2,9 @@
   <div v-if="question == undefined">
     Loading
   </div>
-  <div class="sm:grid sm:grid-cols-3 sm:gap-4 mb-6" v-else>
+  <div class="mb-6 sm:grid sm:grid-cols-3 sm:gap-4" v-else>
     <dt class="">
-      <h3 class="text-sm leading-5 font-medium">
+      <h3 class="text-sm font-medium leading-5">
         {{ question.title }}
       </h3>
       <p class="text-xs text-gray-500">{{ question.description }}</p>
@@ -37,6 +37,7 @@ import Number from "@/components/question_type/Number.vue";
 import Kilos from "@/components/question_type/Kilos.vue";
 import Percent from "@/components/question_type/Percent.vue";
 import Posture from "@/components/question_type/Posture.vue";
+import TextResponse from "@/components/question_type/TextResponse.vue";
 
 import { mapMutations } from "vuex";
 export default {
@@ -50,6 +51,7 @@ export default {
     Number,
     Kilos,
     Percent,
+    TextResponse,
   },
   data: () => ({
     loading: true,

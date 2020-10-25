@@ -22,6 +22,8 @@ firebase.auth().onAuthStateChanged((user) => {
         "responses/createResponse",
         router.currentRoute.params.formID
       );
+    } else {
+      console.log(router);
     }
   } else {
     store.commit("auth/setUser", null);

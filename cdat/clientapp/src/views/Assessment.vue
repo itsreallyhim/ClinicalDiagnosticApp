@@ -14,7 +14,7 @@
       <div v-else>
         <form @submit.prevent="submitResponse">
           <div>
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
               {{ currentAssessment.title }}
             </h3>
             <p class="max-w-2xl text-sm leading-5 text-gray-500">
@@ -23,7 +23,7 @@
           </div>
 
           <div
-            class="transition duration-500 my-5 p-4 -mx-4 shadow-inner "
+            class="p-4 my-5 -mx-4 transition duration-500 shadow-inner "
             :class="
               submitting
                 ? 'bg-gray-500 opacity-50  h-32  overflow-hidden pointer-events-none '
@@ -34,7 +34,7 @@
                 'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, height',
             }"
           >
-            <div class="  border-gray-200 ">
+            <div class="border-gray-200 ">
               <dl>
                 <div v-for="(question, index) in currentQuestions" :key="index">
                   <question :questionmodel="question"></question>
@@ -43,16 +43,17 @@
             </div>
           </div>
           <button
-            class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-indigo active:bg-blue transition duration-150 ease-in-out"
+            class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-indigo active:bg-blue"
             type="submit"
             :disabled="submitting"
           >
             {{ message }}
           </button>
+          <pre></pre>
         </form>
         <div v-if="message == 'Saved'" class="mt-6">
           <h3>Complete the other assessments</h3>
-          <div class="my-6 grid gap-6" v-if="otherAssessments != undefined">
+          <div class="grid gap-6 my-6" v-if="otherAssessments != undefined">
             <assessment-card
               v-for="(assessment, index) in otherAssessments"
               :to="`/assessments/${assessment.id}`"
@@ -101,7 +102,11 @@ export default {
   },
   methods: {
     ...mapActions("assessments", ["setAssessment"]),
-    ...mapActions("responses", ["createResponse", "saveResponse"]),
+    ...mapActions("responses", [
+      "createResponse",
+      "saveResponse",
+      "emptyResponse",
+    ]),
     updateAssessment() {
       this.setAssessment(this.$route.params.formID);
       this.createResponse(this.$route.params.formID);
@@ -121,6 +126,7 @@ export default {
       "Do you really want to leave? You will loose your current answers!"
     );
     if (answer) {
+      this.emptyResponse();
       next();
     } else {
       next(false);

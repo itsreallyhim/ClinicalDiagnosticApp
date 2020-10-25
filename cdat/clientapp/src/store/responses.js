@@ -37,6 +37,9 @@ const actions = {
     await db.collection("responses").add(responseItem);
     commit("SET_STATUS", "Saved");
   },
+  emptyResponse: ({ commit }) => {
+    commit("EMPTY_RESPONSE");
+  },
 };
 
 const mutations = {
@@ -62,6 +65,9 @@ const mutations = {
   },
   SET_STATUS(state, response) {
     state.status = response;
+  },
+  EMPTY_RESPONSE(state) {
+    state.currentResponse.responses = [];
   },
 };
 

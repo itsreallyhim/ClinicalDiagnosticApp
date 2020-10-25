@@ -16,6 +16,9 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      gridTemplateColumns: {
+        "13": "repeat(13, minmax(0,1fr))",
+      },
     },
   },
   plugins: [require("@tailwindcss/ui")],
