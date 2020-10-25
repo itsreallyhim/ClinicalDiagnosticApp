@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white m-6 shadow overflow-hidden sm:rounded-md">
+  <div class="m-6 overflow-hidden bg-white shadow sm:rounded-md">
     <ul>
       <previous-assessment
         v-for="(previousAssessment, index) in previousAssessments"
@@ -36,7 +36,13 @@ export default {
   methods: {
     result(responses) {
       let total = responses.length * 10;
-      let value = responses.reduce((sum, item) => (sum = sum + item.answer), 0);
+      let value = responses.reduce((sum, item) => {
+        if (item.question.question_type == "scale") {
+          return (sum = sum + Number.parseInt(item.answer));
+        } else {
+          return sum;
+        }
+      }, 0);
       return { total, value };
     },
     tidyDate(previousAssessment) {

@@ -46,7 +46,7 @@ const mutations = {
   SET_ANSWER(state, answer) {
     let formatQuestion = db.doc(`/questions/${answer.question}`);
     let item = state.currentResponse.responses.find(
-      (x) => x.question == formatQuestion
+      (x) => x.question.id == formatQuestion.id
     );
     if (item == undefined) {
       state.currentResponse.responses.push({

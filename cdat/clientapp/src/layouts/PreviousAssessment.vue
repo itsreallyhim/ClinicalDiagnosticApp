@@ -1,16 +1,16 @@
 <template>
   <li>
     <div class="block">
-      <div class="px-4 py-4 flex items-center sm:px-6">
-        <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+      <div class="flex items-center px-4 py-4 sm:px-6">
+        <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
           <div>
-            <div class="text-sm leading-5 font-medium text-indigo-600 truncate">
+            <div class="text-sm font-medium leading-5 text-indigo-600 ">
               <slot name="title"></slot>
-              <span class="ml-1 font-normal text-gray-500">
+              <p class="mr-2 font-normal text-gray-500">
                 <slot name="description"></slot>
-              </span>
+              </p>
             </div>
-            <div class="mt-2 flex">
+            <div class="flex mt-2">
               <div class="flex items-center text-sm leading-5 text-gray-500">
                 <span>
                   <slot name="date"></slot>
@@ -18,10 +18,10 @@
               </div>
             </div>
           </div>
-          <div class="mt-4 flex-shrink-0 sm:mt-0">
+          <div class="flex-shrink-0 mt-4 sm:mt-0">
             <div class="flex overflow-hidden">
               <span
-                class="px-2 inline-flex text-lg leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                class="inline-flex px-2 text-lg font-semibold leading-5 text-green-800 bg-green-100 rounded-full"
               >
                 <slot name="result"></slot>
               </span>
@@ -30,12 +30,12 @@
         </div>
         <button
           @click="show = !show"
-          class="ml-5 p-4 flex-shrink-0 bg-gray-100 rounded-full  hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
+          class="flex-shrink-0 p-4 ml-5 transition duration-150 ease-in-out bg-gray-100 rounded-full hover:bg-gray-50 focus:outline-none focus:bg-gray-50"
         >
           <!-- Heroicon name: chevron-right -->
           <svg
             :class="show ? ' -rotate-90' : 'rotate-90'"
-            class="h-5 w-5 text-gray-400 transform"
+            class="w-5 h-5 text-gray-400 transform"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -53,26 +53,26 @@
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div
-              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+              class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8"
             >
               <div
-                class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+                class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg"
               >
                 <table class="min-w-full divide-y divide-gray-200">
                   <thead>
                     <tr>
                       <th
-                        class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                       >
                         Question
                       </th>
                       <th
-                        class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                       >
                         Description
                       </th>
                       <th
-                        class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                       >
                         Result
                       </th>
@@ -85,15 +85,15 @@
                       :key="index"
                     >
                       <td
-                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900"
+                        class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap"
                       >
                         {{ response.question.title }}
                       </td>
-                      <td class="px-6 py-4  text-sm leading-5 text-gray-500">
+                      <td class="px-6 py-4 text-sm leading-5 text-gray-500">
                         {{ response.question.description }}
                       </td>
                       <td
-                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500"
+                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap"
                       >
                         {{ response.answer }}/10
                       </td>

@@ -140,10 +140,7 @@ import VueCamera from "@mrjeffapp/vuejs-camera";
 import { mapGetters } from "vuex";
 
 export default {
-  model: {
-    prop: "data",
-    event: "change",
-  },
+ 
   name: "posture",
   components: {
     VueCamera,
@@ -159,13 +156,14 @@ export default {
     image: null,
     status: "Please Capture or Upload an Image",
     dropFileBlob: null,
-
     supportsCamera: false,
     useCamera: true,
   }),
   watch: {
     image() {
-      this.$emit("data", this.image);
+      
+      // Upload file
+      // Set mutation for response
     },
   },
   mounted() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <number append="%" step="1" v-model="itemValue"></number>
+    <number append="%" step="1" :question="question"></number>
   </div>
 </template>
 
@@ -8,13 +8,9 @@
 import Number from "@/components/question_type/Number.vue";
 export default {
   name: "percent",
-  props: ["itemValue"],
+  props: ["question"],
   components: {
     Number,
-  },
-  model: {
-    prop: "itemValue",
-    event: "value",
   },
 };
 </script>

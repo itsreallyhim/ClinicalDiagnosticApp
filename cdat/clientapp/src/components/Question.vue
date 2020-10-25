@@ -14,7 +14,6 @@
         v-if="question.question_type != 'nested'"
         :is="question.question_type"
         :question="question"
-        v-model="itemValue"
       ></component>
       <component
         v-else-if="question.question_type == 'nested'"
@@ -39,7 +38,6 @@ import Percent from "@/components/question_type/Percent.vue";
 import Posture from "@/components/question_type/Posture.vue";
 import TextResponse from "@/components/question_type/TextResponse.vue";
 
-import { mapMutations } from "vuex";
 export default {
   name: "Question",
   props: ["questionmodel"],
@@ -53,33 +51,13 @@ export default {
     Percent,
     TextResponse,
   },
-  data: () => ({
-    loading: true,
-    itemValue: 0,
-  }),
+
   computed: {
     question() {
       return this.questionmodel;
     },
   },
-  watch: {
-    itemValue: "setAnswer",
-  },
-  methods: {
-    ...mapMutations("responses", ["SET_ANSWER"]),
-    setAnswer() {
-      this.SET_ANSWER({
-        question: this.questionmodel.id,
-        answer: this.itemValue,
-      });
-    },
-  },
 };
 </script>
 
-<style scoped>
-.question {
-  margin-bottom: 1em;
-  text-align: left;
-}
-</style>
+<style></style>

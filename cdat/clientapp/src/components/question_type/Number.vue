@@ -16,7 +16,7 @@
       id="number"
       min="0"
       :step="step"
-      v-model="item"
+      v-model="iValue"
     />
 
     <div
@@ -31,16 +31,13 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "number",
-  model: {
-    prop: "itemValue",
-    event: "change",
-  },
+
   props: {
-    itemValue: {
-      Number,
-      default: () => null,
+    question: {
+      Object,
     },
     prepend: {
       String,
@@ -55,9 +52,23 @@ export default {
       default: () => 1,
     },
   },
+
   data: () => ({
-    item: 0,
+    iValue: null,
   }),
+  watch: {
+    iValue: "setAnswer",
+  },
+
+  methods: {
+    ...mapMutations("responses", ["SET_ANSWER"]),
+    setAnswer() {
+      this.SET_ANSWER({
+        question: this.question.id,
+        answer: this.iValue,
+      });
+    },
+  },
 };
 </script>
 

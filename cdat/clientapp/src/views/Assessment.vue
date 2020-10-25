@@ -25,7 +25,7 @@
           <div
             class="p-4 my-5 -mx-4 transition duration-500 shadow-inner "
             :class="
-              submitting
+              submitting || saved
                 ? 'bg-gray-500 opacity-50  h-32  overflow-hidden pointer-events-none '
                 : 'h-auto'
             "
@@ -45,7 +45,7 @@
           <button
             class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-indigo active:bg-blue"
             type="submit"
-            :disabled="submitting"
+            :disabled="submitting || saved"
           >
             {{ message }}
           </button>
@@ -84,6 +84,7 @@ export default {
   data: () => ({
     submitting: false,
     message: "Save Response",
+    saved: false,
   }),
   watch: {
     $route: "updateAssessment",
@@ -119,6 +120,8 @@ export default {
       this.message = "Saving";
       this.saveResponse();
       this.submitting = false;
+      this.saved = true;
+      this.message = "Saved";
     },
   },
   beforeRouteLeave(to, from, next) {

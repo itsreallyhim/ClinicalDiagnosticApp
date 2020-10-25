@@ -12,7 +12,6 @@
           :is="question.question_type"
           :key="index"
           :question="question"
-          v-on:data="updateResponse({ question: question, data: $event })"
         >
         </component>
       </dd>
@@ -40,26 +39,6 @@ export default {
     ScaleMeta,
     Percent,
     TextResponse,
-  },
-  data: () => ({
-    responses: [],
-  }),
-  methods: {
-    updateResponse(value) {
-      let formatQuestion = value.question;
-      let item = this.responses.find((x) => x.question == formatQuestion);
-      if (item == undefined) {
-        this.responses.push({
-          question: formatQuestion,
-          answer: value.value,
-          data: value.data,
-        });
-      } else {
-        item.answer = value.answer;
-        item.data = value.data;
-      }
-      console.log(value);
-    },
   },
 };
 </script>

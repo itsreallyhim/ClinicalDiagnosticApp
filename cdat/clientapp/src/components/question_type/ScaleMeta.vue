@@ -46,8 +46,6 @@
       <scale
         class="col-span-12 col-start-2 border-t-0"
         :question="question"
-        v-model="itemValue"
-        v-on:value="alert('Value')"
       ></scale>
     </div>
   </div>
@@ -58,14 +56,11 @@ import Scale from "@/components/question_type/Scale.vue";
 
 export default {
   name: "scale-meta",
+
   components: {
     Scale,
   },
   props: ["question"],
-
-  data: () => ({
-    itemValue: 0,
-  }),
 
   methods: {
     submeta(array) {
