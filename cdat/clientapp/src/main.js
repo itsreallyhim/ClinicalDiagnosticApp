@@ -4,7 +4,7 @@ import App from "./App.vue";
 // import "buefy/dist/buefy";
 //import firebase from "@/firebase";
 // import { db } from "@/db";
-import "@/firebase";
+import firebase from "@/firebase";
 import "@/auth";
 import "@/storage";
 import "@/assets/style.css";
@@ -18,8 +18,12 @@ Vue.config.productionTip = false;
 // Vue.use(Buefy);
 Vue.use(firestorePlugin);
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+/* eslint-disable-next-line no-unused-vars*/
+let app;
+firebase.auth().onAuthStateChanged(() => {
+  app = new Vue({
+    router,
+    store,
+    render: (h) => h(App),
+  }).$mount("#app");
+});

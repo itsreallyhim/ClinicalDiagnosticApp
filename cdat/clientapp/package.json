@@ -5,6 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
+    "build:dev:publish": "vue-cli-service build --mode development && firebase deploy --only hosting",
+    "publish": "npm run build && firebase deploy --only hosting",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
     "firebase-admin": "^9.3.0",
     "firebaseui": "^4.7.0",
     "tailwindcss": "^1.9.5",
+    "uuid": "^8.3.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuefire": "^2.2.4",

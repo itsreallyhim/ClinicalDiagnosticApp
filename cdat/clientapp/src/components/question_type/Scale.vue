@@ -1,16 +1,16 @@
 <template>
   <div class="grid grid-cols-12 gap-2">
-    <div class="scale-value" v-for="n in 11" :key="n">
+    <div class="scale-value" v-for="(n, index) in 11" :key="index">
       <label
-        :for="`${question.id}-item${n - 1}`"
+        :for="`i${uuid}item${n - 1}`"
         :class="iValue == n - 1 ? ' bg-blue text-white' : ''"
         class="grid items-center justify-center grid-rows-2 py-2 bg-white rounded-sm shadow-xs justify-items-center"
         >{{ n - 1 }}
         <input
           v-model="iValue"
           type="radio"
-          :name="`${question.id}-item`"
-          :id="`${question.id}-item${n - 1}`"
+          :name="`i${uuid}item${n - 1}`"
+          :id="`i${uuid}item${n - 1}`"
           :value="n - 1"
         />
       </label>
@@ -23,7 +23,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-
+import { v4 as uuid } from "uuid";
 export default {
   name: "scale",
 
@@ -37,6 +37,7 @@ export default {
   },
   data: () => ({
     iValue: null,
+    uuid: uuid(),
   }),
   watch: {
     iValue: "setAnswer",

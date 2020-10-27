@@ -45,7 +45,7 @@
                     class="block w-full form-input sm:text-sm sm:leading-5"
                     name="title"
                     placeholder="Question Title"
-                    autocomplete="false"
+                    autocomplete="off"
                   />
                 </div>
               </div>
@@ -135,7 +135,33 @@
 
               <div
                 class="grid grid-cols-3 gap-6 mt-6"
-                v-if="question.question_type == 'scale-meta'"
+                v-if="question.question_type == 'posture'"
+              >
+                <div class="col-span-3 sm:col-span-2">
+                  <label
+                    for="image_name"
+                    class="block text-sm font-medium leading-5 text-gray-700"
+                  >
+                    Image Name
+                  </label>
+                  <input
+                    placeholder="Image File Name"
+                    required
+                    name="image_name"
+                    id="image_name"
+                    v-model="temp.image_name"
+                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                  />
+                  <small>Specify the image name. Eg: <code>3a.png</code></small>
+                </div>
+              </div>
+
+              <div
+                class="grid grid-cols-3 gap-6 mt-6"
+                v-if="
+                  question.question_type == 'scale-meta' ||
+                    question.question_type == 'custom-scale-meta'
+                "
               >
                 <div class="col-span-3 ">
                   <label
@@ -145,21 +171,23 @@
                     Scale Meta
                   </label>
                   <boolean v-model="isNestedMeta">Nested Meta</boolean>
-                  <pre>{{ scale_meta }}</pre>
+                  <pre>{{ isNestedMeta ? nested_meta : scale_meta }}</pre>
                   <div class="grid grid-cols-4 gap-4">
                     <div class="col-span-4" v-if="isNestedMeta">
                       <input
                         type="text"
                         name="group_label"
                         id="group_label"
-                        class="form-input"
+                        class="text-sm form-input"
+                        autocomplete="off"
                         placeholder="Group Label"
-                        required
+                        v-model="temp.metaLabel"
                       />
+                      <pre>Current Group: {{ scale_meta }}</pre>
                     </div>
 
                     <input
-                      class="form-input"
+                      class="text-sm form-input"
                       type="number"
                       name="start"
                       id="start"
@@ -167,10 +195,9 @@
                       :min="0"
                       :max="11"
                       v-model="temp.start"
-                      required
                     />
                     <input
-                      class="form-input"
+                      class="text-sm form-input"
                       type="number"
                       name="end"
                       id="end"
@@ -187,7 +214,6 @@
                       id="label"
                       placeholder="Label"
                       v-model="temp.label"
-                      required
                     />
                     <select
                       aria-placeholder="Color"
@@ -195,7 +221,7 @@
                       id="color"
                       v-model="temp.color"
                       :class="temp.color ? temp.color : 'bg-white'"
-                      class="w-full px-3 py-2 capitalize border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                      class="w-full px-3 py-2 text-sm capitalize border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                     >
                       <option value="" selected disabled>Colour</option>
                       <option value="bg-orange-400" class="bg-orange-400">
@@ -210,21 +236,23 @@
                       <option value="bg-red-400" class="bg-red-400">Red</option>
                     </select>
                     <button
-                      class="text-sm bg-gray-200 rounded-md"
+                      class="py-2 text-sm bg-gray-200 rounded-md"
                       @click.prevent="addScaleMetaOption()"
                     >
                       Add Option
                     </button>
+                    <div class="col-span-4"></div>
                     <button
                       class="col-start-4 py-2 text-sm bg-gray-300 rounded-md"
                       v-if="isNestedMeta"
-                      @click="addScaleMetaGroup()"
+                      @click.prevent="addScaleMetaGroup()"
                     >
-                      New Group
+                      Save As Group
                     </button>
                   </div>
                 </div>
               </div>
+
               <div
                 class="grid grid-cols-3 gap-6 mt-6"
                 v-if="
@@ -233,7 +261,7 @@
               >
                 <div class="col-span-3 ">
                   <label
-                    for="scale_meta"
+                    for="nested_question"
                     class="block text-sm font-medium leading-5 text-gray-700"
                   >
                     Nested Questions
@@ -265,6 +293,46 @@
                       "
                     >
                       Add Question
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid grid-cols-3 gap-6 mt-6"
+                v-if="
+                  question.question_type == 'custom-scale' ||
+                    question.question_type == 'custom-scale-meta'
+                "
+              >
+                <div class="col-span-3 ">
+                  <label
+                    for="custom-scale"
+                    class="block text-sm font-medium leading-5 text-gray-700"
+                  >
+                    Custom Scale
+                  </label>
+                  <p>Valid Scale Options: {{ custom_scale }}</p>
+                  <div class="grid grid-cols-4 gap-2">
+                    <div class="col-span-2">
+                      <input
+                        class="w-full text-sm form-input"
+                        placeholder="Valid Number"
+                        min="0"
+                        type="number"
+                        name="temp.customnumber"
+                        id="temp.customnumber"
+                        v-model="temp.customnumber"
+                      />
+                    </div>
+                    <button
+                      @click.prevent="addCustomScale()"
+                      :disabled="temp.customnumber == null"
+                      class="col-span-2 border rounded-md"
+                      :class="
+                        temp.customnumber == null ? 'cursor-not-allowed' : ''
+                      "
+                    >
+                      Add Custom Scale
                     </button>
                   </div>
                 </div>
@@ -320,6 +388,9 @@ export default {
         "posture",
         "nested",
         "boolean",
+        "text-response",
+        "custom-scale",
+        "custom-scale-meta",
       ];
 
       return types;
@@ -351,7 +422,7 @@ export default {
     question: {
       title: "",
       description: "",
-      question_type: "",
+      question_type: "scale-meta",
     },
     temp: {
       start: null,
@@ -359,20 +430,37 @@ export default {
       label: "",
       color: null,
       nested_question: null,
+      image_name: null,
+      customnumber: null,
+      metaLabel: null,
     },
     assessment: null,
     scale_meta: [],
+    nested_meta: [],
     nested_questions: [],
+    custom_scale: [],
     response: null,
     saving: false,
-    isNestedMeta: false,
+    isNestedMeta: true,
   }),
   methods: {
     ...mapActions("assessments", ["loadAssessments"]),
     ...mapActions("questions", ["loadQuestions"]),
+    addScaleMetaGroup() {
+      this.nested_meta.push({
+        ...this.scale_meta,
+        label: this.temp.metaLabel ? this.temp.metaLabel : "",
+      });
+      this.temp.metaLabel = null;
+      this.scale_meta = [];
+    },
     addNestedQuestion() {
       this.nested_questions.push(this.temp.nested_question);
       this.temp.nested_question = null;
+    },
+    addCustomScale() {
+      this.custom_scale.push(this.temp.customnumber);
+      this.temp.customnumber = null;
     },
     addScaleMetaOption() {
       this.scale_meta.push({
@@ -388,20 +476,39 @@ export default {
     },
     async handleForm() {
       let insertQ = null;
-      if (this.question.question_type == "scale-meta")
-        insertQ = { ...this.question, scale_meta: this.scale_meta };
-      else if (this.question.question_type == "nested") {
+      if (
+        this.question.question_type == "scale-meta" ||
+        this.question.question_type == "custom-scale-meta"
+      ) {
+        insertQ = { ...insertQ, scale_meta: this.nested_meta };
+      }
+
+      if (
+        this.question.question_type == "custom-scale-meta" ||
+        this.question.question_type == "custom-scale"
+      ) {
+        insertQ = { ...insertQ, custom_scale: this.custom_scale };
+      }
+
+      if (this.question.question_type == "nested") {
         let nestedRefs = [];
         this.nested_questions.forEach((x) =>
           nestedRefs.push(db.collection("questions").doc(x))
         );
-        insertQ = { ...this.question, questions: nestedRefs };
-      } else {
-        insertQ = this.question;
+        insertQ = { ...insertQ, questions: nestedRefs };
       }
+
+      if (this.question.question_type == "posture") {
+        insertQ = { ...insertQ, image: this.temp.image_name };
+      }
+
+      insertQ = { ...insertQ, ...this.question };
+
+      console.log(insertQ);
+
       let titleHash =
         this.question.title.replace(" ", "") + new Date().getTime();
-      console.log(titleHash);
+
       let newRef = db.collection("questions").doc(titleHash);
       let newQuestion = await newRef.set(insertQ);
 
@@ -430,9 +537,13 @@ export default {
         label: "",
         color: null,
         nested_question: null,
+        image_name: null,
+        customnumber: null,
+        metaLabel: null,
       };
       this.assessment = null;
       this.scale_meta = [];
+      this.nested_meta = [];
       this.nested_questions = [];
       this.response = null;
     },
