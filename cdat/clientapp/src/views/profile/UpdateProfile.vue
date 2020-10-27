@@ -11,7 +11,7 @@
           </p>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-          <form @submit.prevent="setProfile(profile)">
+          <form @submit.prevent="setProfile(userProfile)">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-3">
                 <label
@@ -46,7 +46,7 @@
                   >Role</label
                 >
                 <select
-                  v-model="profile.role"
+                  v-model="userProfile.role"
                   id="role"
                   class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
                 >
@@ -62,7 +62,7 @@
                   >Date of Birth</label
                 >
                 <input
-                  v-model="profile.dateOfBirth"
+                  v-model="userProfile.dateOfBirth"
                   id="dob"
                   type="date"
                   class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
@@ -89,7 +89,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "update-profile",
   data: () => ({
-    profile: {
+    userProfile: {
       role: "patient",
       dateOfBirth: null,
     },

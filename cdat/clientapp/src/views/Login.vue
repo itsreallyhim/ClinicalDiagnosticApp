@@ -31,16 +31,15 @@
             </div>
 
             <div class="mt-6">
-              <form @submit.prevent="login()">
-                <span class="block w-full rounded-md shadow-sm">
-                  <button
-                    type="submit"
-                    class="flex justify-center w-full px-4 py-2 text-sm font-medium text-indigo-900 transition duration-150 ease-in-out bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus:border-indigo-400 focus:shadow-outline-indigo active:bg-indigo-400"
-                  >
-                    Register with Google
-                  </button>
-                </span>
-              </form>
+              <span class="block w-full rounded-md shadow-sm">
+                <router-link
+                  :to="{ name: 'Register' }"
+                  type="submit"
+                  class="flex justify-center w-full px-4 py-2 text-sm font-medium text-indigo-900 transition duration-150 ease-in-out bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus:border-indigo-400 focus:shadow-outline-indigo active:bg-indigo-400"
+                >
+                  Register
+                </router-link>
+              </span>
             </div>
           </div>
         </div>

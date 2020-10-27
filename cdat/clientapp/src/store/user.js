@@ -16,10 +16,7 @@ const actions = {
   bindProfile: firestoreAction(({ bindFirestoreRef }) => {
     const user = firebase.auth().currentUser;
 
-    return bindFirestoreRef(
-      "profile",
-      db.collection("users").where("id", "==", user.uid)
-    );
+    return bindFirestoreRef("profile", db.collection("users").doc(user.uid));
   }),
   bindPreviousAssessments: firestoreAction(({ bindFirestoreRef }) => {
     const user = firebase.auth().currentUser;
@@ -34,12 +31,12 @@ const actions = {
       }
     );
   }),
-  setProfile(profile) {
+  setProfile(_, userProfile) {
     const user = firebase.auth().currentUser;
-
+    console.log(userProfile);
     db.collection("users")
       .doc(user.uid)
-      .update({ profile });
+      .update({ profile: userProfile });
   },
 };
 const mutations = {
@@ -49,7 +46,7 @@ const mutations = {
 };
 
 const getters = {
-  profile: (state) => state.profile,
+  profile: (state) => (state.profile ? state.profile.profile : null),
   previousAssessments: (state) => state.previousAssessments,
 };
 

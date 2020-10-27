@@ -28,7 +28,7 @@ import Percent from "@/components/question_type/Percent.vue";
 import TextResponse from "@/components/question_type/TextResponse.vue";
 import Posture from "@/components/question_type/Posture.vue";
 import Boolean from "@/components/question_type/Boolean.vue";
-
+import CustomScale from "@/components/question_type/CustomScale.vue";
 export default {
   name: "Nested",
   props: ["questions"],
@@ -41,6 +41,7 @@ export default {
     Percent,
     TextResponse,
     Boolean,
+    CustomScale,
   },
 };
 </script>

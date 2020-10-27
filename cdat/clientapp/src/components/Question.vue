@@ -38,6 +38,8 @@ import Percent from "@/components/question_type/Percent.vue";
 import Posture from "@/components/question_type/Posture.vue";
 import TextResponse from "@/components/question_type/TextResponse.vue";
 import Boolean from "@/components/question_type/Boolean.vue";
+import CustomScale from "@/components/question_type/CustomScale.vue";
+import CustomScaleMeta from "@/components/question_type/CustomScaleMeta.vue";
 
 export default {
   name: "Question",
@@ -52,6 +54,8 @@ export default {
     Percent,
     TextResponse,
     Boolean,
+    CustomScale,
+    CustomScaleMeta,
   },
 
   computed: {

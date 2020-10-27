@@ -19,7 +19,7 @@
         </p>
       </div>
 
-      <scale :question="question"></scale>
+      <custom-scale :question="question"></custom-scale>
     </div>
     <div v-else class="grid grid-cols-13 ">
       <div
@@ -47,22 +47,22 @@
           </p>
         </div>
       </div>
-      <scale
+      <custom-scale
         class="col-span-12 col-start-2 border-t-0"
         :question="question"
-      ></scale>
+      ></custom-scale>
     </div>
   </div>
 </template>
 
 <script>
-import Scale from "@/components/question_type/Scale.vue";
+import CustomScale from "@/components/question_type/CustomScale.vue";
 
 export default {
   name: "scale-meta",
 
   components: {
-    Scale,
+    CustomScale,
   },
   props: ["question"],
 
