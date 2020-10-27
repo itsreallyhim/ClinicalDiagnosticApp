@@ -59,7 +59,7 @@
 import CustomScale from "@/components/question_type/CustomScale.vue";
 
 export default {
-  name: "scale-meta",
+  name: "custom-scale-meta",
 
   components: {
     CustomScale,

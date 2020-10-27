@@ -15,7 +15,7 @@ const state = {
 const actions = {
   bindResponses: firestoreAction(({ bindFirestoreRef }) => {
     return bindFirestoreRef("responses", db.collection("responses"), {
-      maxRefDepth: 3,
+      maxRefDepth: 4,
     });
   }),
   createResponse: ({ commit }, assessment) => {
@@ -49,12 +49,15 @@ const mutations = {
       (x) => x.question.id == formatQuestion.id
     );
     if (item == undefined) {
-      state.currentResponse.responses.push({
+      let respObejct = {
         question: formatQuestion,
-        answer: answer.answer,
-      });
+      };
+      if (answer.answer) respObejct = { ...respObejct, answer: answer.answer };
+      if (answer.image) respObejct = { ...respObejct, image: answer.image };
+      state.currentResponse.responses.push(respObejct);
     } else {
-      item.answer = answer.answer;
+      if (answer.answer) item.answer = answer.answer;
+      if (answer.image) item.image = answer.image;
     }
   },
   CREATE_RESPONSE(state, assessment) {

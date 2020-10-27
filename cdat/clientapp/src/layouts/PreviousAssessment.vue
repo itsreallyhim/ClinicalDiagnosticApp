@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li :class="show ? 'mb-16' : ''" class="bg-white">
     <div class="block">
       <div class="flex items-center px-4 py-4 sm:px-6">
         <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
@@ -85,21 +85,31 @@
                       :key="index"
                     >
                       <td
-                        class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 whitespace-no-wrap"
+                        class="px-6 py-4 text-sm font-medium leading-5 text-gray-900 "
                       >
                         {{ response.question.title }}
                       </td>
                       <td class="px-6 py-4 text-sm leading-5 text-gray-500">
-                        {{ response.question.description }}
+                        <div
+                          v-if="response.question.question_type == 'posture'"
+                          class="grid gap-4 sm:grid-cols-2"
+                        >
+                          <img
+                            :src="images[response.image]"
+                            :alt="response.image"
+                          />
+                          <div>
+                            {{ response.question.description }}
+                          </div>
+                        </div>
+                        <div v-else>
+                          {{ response.question.description }}
+                        </div>
                       </td>
-                      <td
-                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap"
-                      >
-                        {{ response.answer }}/10
+                      <td class="px-6 py-4 text-sm leading-5 text-gray-500 ">
+                        {{ response.answer }}<span>{{ append(response) }}</span>
                       </td>
                     </tr>
-
-                    <!-- More rows... -->
                   </tbody>
                 </table>
               </div>
@@ -112,7 +122,7 @@
 </template>
 
 <script>
-
+import storage from "@/storage";
 export default {
   name: "previous-assessment",
   props: {
@@ -127,7 +137,50 @@ export default {
   },
   data: () => ({
     show: false,
+    images: {},
   }),
+
+  created() {
+    this.previousAssessment.responses.forEach((element) => {
+      if ("image" in element) {
+        //console.log("image", element.image);
+        this.getImage(element.image);
+      }
+    });
+  },
+  methods: {
+    append(response) {
+      let append = "";
+
+      switch (response.question.question_type) {
+        case "kilos":
+          append = "kg";
+          break;
+        case "percent":
+          append = "%";
+          break;
+        case "scale":
+        case "scale-meta":
+        case "custom-scale":
+        case "custom-scale-meta":
+          append = "/10";
+          break;
+        case "number":
+        default:
+          append = "";
+          break;
+      }
+      return append;
+    },
+    getImage(imagePath) {
+      console.log("path", imagePath);
+      if (imagePath != undefined) {
+        let imageRef = storage.child(imagePath);
+
+        imageRef.getDownloadURL().then((url) => (this.images[imagePath] = url));
+      }
+    },
+  },
 };
 </script>
 

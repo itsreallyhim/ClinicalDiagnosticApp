@@ -13,7 +13,7 @@ const actions = {
       "assessments",
       db.collection("assessments").orderBy("order"),
       {
-        maxRefDepth: 5,
+        maxRefDepth: 7,
       }
     );
   }),

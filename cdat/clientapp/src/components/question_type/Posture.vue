@@ -81,7 +81,7 @@
       v-else
       :src="imagePath"
       :alt="question.title"
-      class="self-center h-72 justify-self-center"
+      class="self-center w-auto h-72 sm:h-64 md:h-72 justify-self-center"
     />
 
     <div>
@@ -179,7 +179,6 @@ export default {
       this.dropFileBlob = event.target.files[0];
       console.log(this.dropFileBlob);
       this.capture(this.dropFileBlob);
-      this.uploadImage(this.dropFileBlob);
     },
     async hasCamera() {
       let devices = await navigator.mediaDevices
@@ -200,6 +199,7 @@ export default {
         self.image = reader.result;
       };
       reader.readAsDataURL(blob);
+      this.uploadImage(blob);
     },
     resetCamera() {
       this.image = null;
@@ -225,9 +225,10 @@ export default {
         },
         () => {
           this.status = "Upload Complete";
+          this.imageUpload = imageUpload.snapshot.ref.fullPath;
+          this.setAnswer();
         }
       );
-      this.imageUpload = imageUpload.ref;
     },
     async getImage() {
       let imageRef = storage
