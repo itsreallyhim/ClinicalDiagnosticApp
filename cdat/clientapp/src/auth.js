@@ -9,6 +9,7 @@ firebase.auth().onAuthStateChanged((user) => {
       id: user.uid,
       displayName: user.displayName,
       email: user.email,
+      photo: user.photoURL,
     };
     db.collection("users")
       .doc(dbProfile.id)

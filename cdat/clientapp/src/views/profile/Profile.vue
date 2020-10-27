@@ -6,10 +6,16 @@
         :to="{ name: 'Update Profile' }"
         v-if="$route.name != 'Update Profile'"
       >
+        <template #icon v-if="'photo' in user">
+          <img class="mr-3 rounded-full shadow-md" :src="user.photo" alt="" />
+        </template>
         <template #title>My Profile</template>
-        <template #description>
+        <template #description v-if="profile != null">
           <p>Role: {{ profile.role }}</p>
           <p>Date of Birth: {{ profile.dateOfBirth }}</p>
+        </template>
+        <template #description v-else>
+          Please Update your Profile
         </template>
         <template #link>Update Profile</template>
       </card>
@@ -39,6 +45,7 @@ export default {
     Card,
   },
   computed: {
+    ...mapGetters("auth", ["user"]),
     ...mapGetters("user", ["profile"]),
   },
 };
