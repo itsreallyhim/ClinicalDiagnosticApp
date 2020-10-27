@@ -4,7 +4,7 @@
       <div class="flex items-center px-4 py-4 sm:px-6">
         <div class="flex-1 min-w-0 sm:flex sm:items-center sm:justify-between">
           <div>
-            <div class="text-sm font-medium leading-5 text-indigo-600 ">
+            <div class="text-sm font-medium leading-5 text-blue ">
               <slot name="title"></slot>
               <p class="mr-2 font-normal text-gray-500">
                 <slot name="description"></slot>

@@ -8,7 +8,7 @@ const state = {
 };
 
 const actions = {
-  init: firestoreAction(({ bindFirestoreRef }) => {
+  loadAssessments: firestoreAction(({ bindFirestoreRef }) => {
     return bindFirestoreRef("assessments", db.collection("assessments"), {
       maxRefDepth: 5,
     });

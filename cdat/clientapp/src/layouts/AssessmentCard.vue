@@ -1,13 +1,13 @@
 <template>
   <div
-    class="bg-white overflow-hidden shadow rounded-lg flex flex-col justify-between"
+    class="flex flex-col justify-between overflow-hidden bg-white rounded-lg shadow"
   >
     <div class="p-5">
       <div class="flex items-center">
-        <div class="flex-shrink-0 mr-5 hidden">
+        <div class="flex-shrink-0 hidden mr-5">
           <!-- Heroicon name: scale -->
           <svg
-            class="h-6 w-6 text-cool-gray-400"
+            class="w-6 h-6 text-cool-gray-400"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -21,15 +21,15 @@
             />
           </svg>
         </div>
-        <div class=" w-0 flex-1">
+        <div class="flex-1 w-0 ">
           <dl>
-            <dt class="text-sm leading-7 font-medium text-cool-gray-900">
+            <dt class="font-medium leading-7 text-cool-gray-900">
               <router-link :to="to">
                 {{ assessment.title }}
               </router-link>
             </dt>
             <dd>
-              <div class="text-xs leading-5 font-medium text-cool-gray-500 ">
+              <div class="font-light leading-5 text-cool-gray-500">
                 {{ assessment.description }}
               </div>
             </dd>
@@ -37,11 +37,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-cool-gray-50 px-5 py-3">
-      <div class="text-xs leading-5">
+    <div class="px-5 py-3 bg-cool-gray-50">
+      <div class="text-sm leading-5">
         <router-link
           :to="to"
-          class="font-medium text-blue hover:text-blue transition ease-in-out duration-150"
+          class="font-medium transition duration-150 ease-in-out text-blue hover:text-blue"
         >
           View Assessment
         </router-link>

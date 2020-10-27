@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="question != null">
     <div v-if="'start' in question.scale_meta[0]">
       <div class="grid h-8 grid-cols-12 gap-2 my-2">
         <p

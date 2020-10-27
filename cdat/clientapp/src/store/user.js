@@ -29,7 +29,7 @@ const actions = {
         .collection("responses")
         .where("owner", "==", db.doc(`/users/${user.uid}`)),
       {
-        maxRefDepth: 4,
+        maxRefDepth: 2,
       }
     );
   }),

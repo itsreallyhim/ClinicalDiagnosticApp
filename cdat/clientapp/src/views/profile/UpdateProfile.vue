@@ -91,7 +91,7 @@ export default {
   data: () => ({
     profile: {
       role: "patient",
-      dateOfBirth: new Date().toLocaleDateString("en-au"),
+      dateOfBirth: null,
     },
   }),
   methods: {

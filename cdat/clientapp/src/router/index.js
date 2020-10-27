@@ -1,12 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-
 import store from "@/store";
+import admin from "@/router/admin";
 
 Vue.use(VueRouter);
 
 const routes = [
+  ...admin,
   {
     path: "/",
     name: "Home",
@@ -21,8 +22,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "@/views/About.vue"),
+    component: () => import("@/views/About.vue"),
     meta: {
       guest: true,
     },
@@ -30,21 +30,15 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "login" */ "@/views/Login.vue"),
+    component: () => import("@/views/Login.vue"),
     meta: {
       guest: true,
-    },
-    beforeRouteLeave(to, from, next) {
-      if (!store.state.user.profile) next({ name: "Update Profile" });
-      else next();
     },
   },
   {
     path: "/assessments",
     name: "Assessments",
-    component: () =>
-      import(/* webpackChunkName: "assessments" */ "@/views/Assessments.vue"),
+    component: () => import("@/views/Assessments.vue"),
     meta: {
       guest: false,
     },
@@ -52,8 +46,7 @@ const routes = [
       {
         name: "Assessment",
         path: ":formID",
-        component: () =>
-          import(/* webpackChunkName: "assessment" */ "@/views/Assessment.vue"),
+        component: () => import("@/views/Assessment.vue"),
         meta: {
           guest: false,
         },
@@ -63,15 +56,11 @@ const routes = [
   {
     path: "/profile",
     name: "Profile",
-    component: () =>
-      import(/* webpackChunkName: "profile" */ "@/views/profile/Profile.vue"),
+    component: () => import("@/views/profile/Profile.vue"),
     children: [
       {
         name: "Update Profile",
-        component: () =>
-          import(
-            /* webpackChunkName: "update-profile" */ "@/views/profile/UpdateProfile.vue"
-          ),
+        component: () => import("@/views/profile/UpdateProfile.vue"),
         path: "update",
         meta: {
           guest: false,
@@ -79,10 +68,7 @@ const routes = [
       },
       {
         name: "Previous Assessments",
-        component: () =>
-          import(
-            /* webpackChunkName: "previous-assessments" */ "@/views/profile/PreviousAssessments.vue"
-          ),
+        component: () => import("@/views/profile/PreviousAssessments.vue"),
         path: "previous-assessments",
         meta: {
           guest: false,
@@ -96,13 +82,15 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes,
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name == "Login" && store.state.auth.isLoggedIn == true)
+  /*if (to.name == "Login" && store.state.auth.isLoggedIn == true)
     next({ name: "Home" });
-  else if (to.meta.guest == false && store.state.auth.isLoggedIn == false)
+  else */
+  if (to.meta.guest == false && store.state.auth.isLoggedIn == false)
     next({ name: "Login" });
   else next();
 });

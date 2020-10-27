@@ -15,7 +15,7 @@ const state = {
 const actions = {
   bindResponses: firestoreAction(({ bindFirestoreRef }) => {
     return bindFirestoreRef("responses", db.collection("responses"), {
-      maxRefDepth: 5,
+      maxRefDepth: 3,
     });
   }),
   createResponse: ({ commit }, assessment) => {
@@ -33,7 +33,7 @@ const actions = {
       responses: state.currentResponse.responses,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
-    console.log(responseItem);
+
     await db.collection("responses").add(responseItem);
     commit("SET_STATUS", "Saved");
   },

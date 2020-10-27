@@ -1,6 +1,6 @@
 <template>
   <div class="m-6 overflow-hidden bg-white shadow sm:rounded-md">
-    <ul>
+    <ul class="divide-y">
       <previous-assessment
         v-for="(previousAssessment, index) in previousAssessments"
         :key="index"
@@ -16,7 +16,6 @@
             result(previousAssessment.responses).total
           }}</template
         >
-        {{ previousAssessment }}
       </previous-assessment>
     </ul>
   </div>
@@ -35,8 +34,11 @@ export default {
   },
   methods: {
     result(responses) {
-      let total = responses.length * 10;
-      let value = responses.reduce((sum, item) => {
+      let itemsToCount = responses.filter(
+        (item) => item.question.question_type == "scale"
+      );
+      let total = itemsToCount.length * 10;
+      let value = itemsToCount.reduce((sum, item) => {
         if (item.question.question_type == "scale") {
           return (sum = sum + Number.parseInt(item.answer));
         } else {

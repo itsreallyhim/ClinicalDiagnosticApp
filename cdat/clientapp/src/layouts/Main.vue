@@ -3,10 +3,10 @@
   Tailwind UI components require Tailwind CSS v1.8 and the @tailwindcss/ui plugin.
   Read the documentation to get started: https://tailwindui.com/documentation
 -->
-  <div class="h-screen flex overflow-hidden bg-gray-100">
+  <div class="flex h-screen overflow-hidden bg-gray-100">
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div :class="show ? '' : 'hidden'" class="md:hidden">
-      <div class="fixed inset-0 flex z-40">
+      <div class="fixed inset-0 z-40 flex">
         <!--
         Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
@@ -30,15 +30,15 @@
           From: "translate-x-0"
           To: "-translate-x-full"
       -->
-        <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
-          <div class="absolute top-0 right-0 -mr-14 p-1">
+        <div class="relative flex flex-col flex-1 w-full max-w-xs bg-white">
+          <div class="absolute top-0 right-0 p-1 -mr-14">
             <button
               @click="show = !show"
-              class="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+              class="flex items-center justify-center w-12 h-12 rounded-full focus:outline-none focus:bg-gray-600"
               aria-label="Close sidebar"
             >
               <svg
-                class="h-6 w-6 text-white"
+                class="w-6 h-6 text-white"
                 stroke="currentColor"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -53,30 +53,30 @@
             </button>
           </div>
           <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-            <div class="flex-shrink-0 flex items-center px-4">
+            <div class="flex items-center flex-shrink-0 px-4">
               <img
-                class="h-8 w-auto"
-                src="@/assets/global-back-care-logo.png"
+                class="w-auto h-8"
+                src="@/assets/global-back-care-logo.jpg"
                 alt="Global Back Care"
               />
             </div>
-            <nav class="mt-5 px-2 space-y-1">
+            <nav class="px-2 mt-5 space-y-1">
               <slot name="menu"></slot>
             </nav>
           </div>
-          <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-            <div href="#" class="flex-shrink-0 group block focus:outline-none">
+          <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+            <div href="#" class="flex-shrink-0 block group focus:outline-none">
               <div class="flex items-center">
                 <div class="ml-3">
                   <router-link
                     :to="{ name: 'Profile' }"
                     v-if="isLoggedIn"
-                    class="text-base leading-6 font-medium text-gray-700 group-hover:text-gray-900"
+                    class="text-base font-medium leading-6 text-gray-700 group-hover:text-gray-900"
                   >
                     {{ user.displayName }}
                   </router-link>
                   <div
-                    class="text-sm leading-5 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150"
+                    class="text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out group-hover:text-gray-700 group-focus:underline"
                   >
                     <slot name="login"> </slot>
                   </div>
@@ -85,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="flex-shrink-0 w-14 z-30" @click="show = !show">
+        <div class="z-30 flex-shrink-0 w-14" @click="show = !show">
           <!-- Force sidebar to shrink to fit close icon -->
         </div>
       </div>
@@ -95,30 +95,30 @@
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
-        <div class="flex flex-col h-0 flex-1 border-r border-gray-200 bg-white">
-          <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+        <div class="flex flex-col flex-1 h-0 bg-white border-r border-gray-200">
+          <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
             <div class="flex items-center flex-shrink-0 px-4">
               <img
                 class="w-auto"
-                src="@/assets/global-back-care-logo.png"
+                src="@/assets/global-back-care-logo.jpg"
                 alt="Global Back Care"
               />
             </div>
-            <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
+            <nav class="flex-1 px-2 mt-5 space-y-1 bg-white">
               <slot name="menu"></slot>
             </nav>
           </div>
-          <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-            <div class="flex-shrink-0 w-full group block">
+          <div class="flex flex-shrink-0 p-4 border-t border-gray-200">
+            <div class="flex-shrink-0 block w-full group">
               <div class="flex items-center">
                 <div class="ml-3">
                   <p
-                    class="text-sm leading-5 font-medium text-gray-700 group-hover:text-gray-900"
+                    class="text-sm font-medium leading-5 text-gray-700 group-hover:text-gray-900"
                   >
                     <slot name="user"></slot>
                   </p>
                   <div
-                    class="text-sm leading-5 font-medium text-gray-500 group-hover:text-gray-700 group-focus:underline transition ease-in-out duration-150"
+                    class="text-sm font-medium leading-5 text-gray-500 transition duration-150 ease-in-out group-hover:text-gray-700 group-focus:underline"
                   >
                     <slot name="login"> </slot>
                   </div>
@@ -129,8 +129,8 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
-      <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+    <div class="flex flex-col flex-1 w-0 overflow-hidden">
+      <div class="pt-1 pl-1 md:hidden sm:pl-3 sm:pt-3">
         <button
           class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
           aria-label="Open sidebar"
@@ -138,7 +138,7 @@
         >
           <!-- Heroicon name: menu -->
           <svg
-            class="h-6 w-6"
+            class="w-6 h-6"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -154,19 +154,19 @@
         </button>
       </div>
       <main
-        class="flex-1 relative z-0 overflow-y-auto focus:outline-none"
+        class="relative z-0 flex-1 overflow-y-auto focus:outline-none"
         tabindex="0"
       >
         <div class="pt-2 pb-6 md:py-6">
           <div
-            class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8"
+            class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8"
             :class="pagetitle == 'Home' ? 'hidden' : ''"
           >
             <h1 class="text-2xl font-semibold text-gray-900">
               <slot name="pagetitle">{{ pagetitle }}</slot>
             </h1>
           </div>
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
             <slot></slot>
           </div>
         </div>

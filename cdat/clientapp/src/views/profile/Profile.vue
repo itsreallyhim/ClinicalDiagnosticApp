@@ -25,11 +25,18 @@
 <script>
 import MenuLink from "@/layouts/MenuItem";
 import Card from "@/layouts/Card";
+import { mapActions } from "vuex";
 export default {
   name: "Profile",
   components: {
     MenuLink,
     Card,
+  },
+  created() {
+    this.bindResponses();
+  },
+  methods: {
+    ...mapActions("responses", ["bindResponses"]),
   },
 };
 </script>

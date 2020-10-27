@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="my-6 grid gap-6"
+      class="grid gap-6 my-6"
       v-if="assessments != undefined"
       :class="$route.name == 'Assessments' ? ' sm:grid-cols-3' : 'hidden'"
     >
@@ -26,13 +26,13 @@ export default {
     AssessmentCard,
   },
   created() {
-    this.init();
+    this.loadAssessments();
   },
   computed: {
     ...mapGetters("assessments", ["assessments"]),
   },
   methods: {
-    ...mapActions("assessments", ["init"]),
+    ...mapActions("assessments", ["loadAssessments"]),
   },
 };
 </script>

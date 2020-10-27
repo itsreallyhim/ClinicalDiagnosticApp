@@ -12,7 +12,7 @@ firebase.auth().onAuthStateChanged((user) => {
     };
     db.collection("users")
       .doc(dbProfile.id)
-      .set(dbProfile);
+      .set(dbProfile, { merge: true });
     store.commit("auth/setUser", dbProfile);
     store.dispatch("user/linkProfile");
     if (router.currentRoute.name == "Login") {
@@ -22,8 +22,6 @@ firebase.auth().onAuthStateChanged((user) => {
         "responses/createResponse",
         router.currentRoute.params.formID
       );
-    } else {
-      console.log(router);
     }
   } else {
     store.commit("auth/setUser", null);

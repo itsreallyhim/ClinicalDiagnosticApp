@@ -17,6 +17,9 @@
       <template #login>
         <button @click.prevent="logout" v-if="isLoggedIn">Logout</button>
         <button @click.prevent="login" v-if="!isLoggedIn">Log In</button>
+        <div v-if="user && adminEmails.includes(user.email)">
+          <router-link :to="{ name: 'Admin' }">Admin</router-link>
+        </div>
       </template>
       <router-view />
     </main-view>
@@ -34,6 +37,8 @@ export default {
   },
   data() {
     return {
+      /* TODO: Change to Proper Auth/Roles */
+      adminEmails: ["u3160264@gmail.com"],
       menu: [
         {
           to: { name: "Home" },
@@ -58,9 +63,7 @@ export default {
       ],
     };
   },
-  created() {
-    this.bindResponses();
-  },
+  created() {},
   computed: {
     ...mapState("auth", ["user", "isLoggedIn"]),
     pagetitle() {
@@ -69,7 +72,6 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["login", "logout"]),
-    ...mapActions("responses", ["bindResponses"]),
   },
 };
 </script>
