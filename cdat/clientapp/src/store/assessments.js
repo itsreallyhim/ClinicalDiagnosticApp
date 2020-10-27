@@ -9,9 +9,13 @@ const state = {
 
 const actions = {
   loadAssessments: firestoreAction(({ bindFirestoreRef }) => {
-    return bindFirestoreRef("assessments", db.collection("assessments"), {
-      maxRefDepth: 5,
-    });
+    return bindFirestoreRef(
+      "assessments",
+      db.collection("assessments").orderBy("order"),
+      {
+        maxRefDepth: 5,
+      }
+    );
   }),
   setAssessment: ({ commit }, assessmentID) => {
     commit("SET_ASSESSMENT", assessmentID);

@@ -27,6 +27,7 @@ import Kilos from "@/components/question_type/Kilos.vue";
 import Percent from "@/components/question_type/Percent.vue";
 import TextResponse from "@/components/question_type/TextResponse.vue";
 import Posture from "@/components/question_type/Posture.vue";
+import Boolean from "@/components/question_type/Boolean.vue";
 
 export default {
   name: "Nested",
@@ -39,6 +40,7 @@ export default {
     ScaleMeta,
     Percent,
     TextResponse,
+    Boolean,
   },
 };
 </script>

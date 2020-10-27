@@ -27,6 +27,7 @@ const actions = {
       "previousAssessments",
       db
         .collection("responses")
+        .orderBy("created_at")
         .where("owner", "==", db.doc(`/users/${user.uid}`)),
       {
         maxRefDepth: 2,

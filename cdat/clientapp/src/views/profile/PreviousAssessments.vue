@@ -11,11 +11,7 @@
           previousAssessment.assessment.description
         }}</template>
         <template #date>{{ tidyDate(previousAssessment) }}</template>
-        <template #result
-          >{{ result(previousAssessment.responses).value }}/{{
-            result(previousAssessment.responses).total
-          }}</template
-        >
+        <template #result>{{ 10 / 10 }}</template>
       </previous-assessment>
     </ul>
   </div>
@@ -33,18 +29,9 @@ export default {
     ...mapGetters("user", ["previousAssessments"]),
   },
   methods: {
-    result(responses) {
-      let itemsToCount = responses.filter(
-        (item) => item.question.question_type == "scale"
-      );
-      let total = itemsToCount.length * 10;
-      let value = itemsToCount.reduce((sum, item) => {
-        if (item.question.question_type == "scale") {
-          return (sum = sum + Number.parseInt(item.answer));
-        } else {
-          return sum;
-        }
-      }, 0);
+    result() {
+      let total = 1 * 10;
+      let value = 0;
       return { total, value };
     },
     tidyDate(previousAssessment) {

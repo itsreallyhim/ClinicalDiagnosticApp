@@ -130,6 +130,8 @@
       >
         Reset Image
       </button>
+
+      <pre>{{ status }}</pre>
     </div>
   </div>
 </template>
@@ -137,10 +139,9 @@
 <script>
 import storage from "@/storage";
 import VueCamera from "@mrjeffapp/vuejs-camera";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
- 
   name: "posture",
   components: {
     VueCamera,
@@ -158,10 +159,10 @@ export default {
     dropFileBlob: null,
     supportsCamera: false,
     useCamera: true,
+    imageUpload: null,
   }),
   watch: {
     image() {
-      
       // Upload file
       // Set mutation for response
     },
@@ -178,6 +179,7 @@ export default {
       this.dropFileBlob = event.target.files[0];
       console.log(this.dropFileBlob);
       this.capture(this.dropFileBlob);
+      this.uploadImage(this.dropFileBlob);
     },
     async hasCamera() {
       let devices = await navigator.mediaDevices
@@ -203,12 +205,14 @@ export default {
       this.image = null;
       this.$refs.camera.resetStream();
     },
-    uploadImage() {
+    uploadImage(blob) {
       let imageRef = storage
         .child("posture_image")
         .child(this.user.id)
-        .child("testImage");
-      let imageUpload = imageRef.put(this.image);
+        .child(this.question.id);
+      imageRef;
+
+      let imageUpload = imageRef.put(blob);
 
       imageUpload.on(
         "state_changed",
@@ -223,6 +227,7 @@ export default {
           this.status = "Upload Complete";
         }
       );
+      this.imageUpload = imageUpload.ref;
     },
     async getImage() {
       let imageRef = storage
@@ -231,6 +236,13 @@ export default {
         .child(this.question.image);
 
       imageRef.getDownloadURL().then((url) => (this.imagePath = url));
+    },
+    ...mapMutations("responses", ["SET_ANSWER"]),
+    setAnswer() {
+      this.SET_ANSWER({
+        question: this.question.id,
+        image: this.imageUpload,
+      });
     },
   },
 };

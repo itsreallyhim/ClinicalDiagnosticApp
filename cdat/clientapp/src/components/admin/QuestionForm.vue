@@ -41,9 +41,11 @@
                   <input
                     v-model="question.title"
                     id="title"
-                    class="block w-full transition duration-150 ease-in-out form-input sm:text-sm sm:leading-5"
+                    required
+                    class="block w-full form-input sm:text-sm sm:leading-5"
                     name="title"
                     placeholder="Question Title"
+                    autocomplete="false"
                   />
                 </div>
               </div>
@@ -60,7 +62,7 @@
                     v-model="question.description"
                     id="description"
                     rows="3"
-                    class="block w-full mt-1 transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5"
+                    class="block w-full mt-1 form-textarea sm:text-sm sm:leading-5"
                     placeholder="Question Description"
                   ></textarea>
                 </div>
@@ -81,7 +83,7 @@
                     v-model="assessment"
                     name="assessment"
                     id="assessment"
-                    class="block w-full px-3 py-2 mt-1 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                    class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                   >
                     <option
                       :value="assessment.id"
@@ -114,10 +116,11 @@
                     Question Type
                   </label>
                   <select
+                    required
                     name="question_type"
                     id="question_type"
                     v-model="question.question_type"
-                    class="block w-full px-3 py-2 mt-1 capitalize transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                    class="block w-full px-3 py-2 mt-1 capitalize bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
                   >
                     <option
                       :value="question_type"
@@ -125,8 +128,8 @@
                       :key="index"
                       class="capitalize"
                       >{{ question_type }}</option
-                    ></select
-                  >
+                    >
+                  </select>
                 </div>
               </div>
 
@@ -141,10 +144,20 @@
                   >
                     Scale Meta
                   </label>
-                  <div>
-                    {{ scale_meta }}
-                  </div>
+                  <boolean v-model="isNestedMeta">Nested Meta</boolean>
+                  <pre>{{ scale_meta }}</pre>
                   <div class="grid grid-cols-4 gap-4">
+                    <div class="col-span-4" v-if="isNestedMeta">
+                      <input
+                        type="text"
+                        name="group_label"
+                        id="group_label"
+                        class="form-input"
+                        placeholder="Group Label"
+                        required
+                      />
+                    </div>
+
                     <input
                       class="form-input"
                       type="number"
@@ -154,6 +167,7 @@
                       :min="0"
                       :max="11"
                       v-model="temp.start"
+                      required
                     />
                     <input
                       class="form-input"
@@ -161,32 +175,110 @@
                       name="end"
                       id="end"
                       placeholder="End"
-                      :min="Number.parseInt(temp.start) + 1"
+                      :min="Number.parseInt(temp.start)"
                       :max="11"
                       v-model="temp.end"
+                      required
                     />
                     <input
-                      class="form-input"
+                      class="text-sm form-input"
                       type="text"
                       name="label"
                       id="label"
                       placeholder="Label"
                       v-model="temp.label"
+                      required
                     />
-                    <button @click.prevent="addScaleMetaOption()">
+                    <select
+                      aria-placeholder="Color"
+                      name="color"
+                      id="color"
+                      v-model="temp.color"
+                      :class="temp.color ? temp.color : 'bg-white'"
+                      class="w-full px-3 py-2 capitalize border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                    >
+                      <option value="" selected disabled>Colour</option>
+                      <option value="bg-orange-400" class="bg-orange-400">
+                        Orange
+                      </option>
+                      <option value="bg-green-400" class="bg-green-400">
+                        Green
+                      </option>
+                      <option value="bg-gray-300" class="bg-gray-300">
+                        Gray
+                      </option>
+                      <option value="bg-red-400" class="bg-red-400">Red</option>
+                    </select>
+                    <button
+                      class="text-sm bg-gray-200 rounded-md"
+                      @click.prevent="addScaleMetaOption()"
+                    >
                       Add Option
+                    </button>
+                    <button
+                      class="col-start-4 py-2 text-sm bg-gray-300 rounded-md"
+                      v-if="isNestedMeta"
+                      @click="addScaleMetaGroup()"
+                    >
+                      New Group
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="grid grid-cols-3 gap-6 mt-6"
+                v-if="
+                  question.question_type == 'nested' && questions.length != 0
+                "
+              >
+                <div class="col-span-3 ">
+                  <label
+                    for="scale_meta"
+                    class="block text-sm font-medium leading-5 text-gray-700"
+                  >
+                    Nested Questions
+                  </label>
+                  <pre>{{ nested_questions }}</pre>
+                  <div class="grid grid-cols-4 gap-2">
+                    <div class="col-span-3">
+                      <select
+                        name="nested_question"
+                        id="nested_question"
+                        v-model="temp.nested_question"
+                        class="w-full px-3 py-2 mt-1 capitalize bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                      >
+                        <option
+                          :value="question.id"
+                          v-for="(question, index) in questions"
+                          :key="index"
+                          class="capitalize"
+                          >{{ question.title }}</option
+                        >
+                      </select>
+                    </div>
+                    <button
+                      @click.prevent="addNestedQuestion()"
+                      :disabled="temp.nested_question == null"
+                      class="mt-1 border rounded-md"
+                      :class="
+                        temp.nested_question == null ? 'cursor-not-allowed' : ''
+                      "
+                    >
+                      Add Question
                     </button>
                   </div>
                 </div>
               </div>
             </div>
+
             <div class="px-4 py-3 text-right bg-gray-50 sm:px-6">
               <span class="inline-flex rounded-md shadow-sm">
                 <button
+                  :disabled="saving"
                   type="submit"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700"
+                  class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700"
                 >
-                  Save
+                  {{ !saving ? "Save" : "Saved" }}
                 </button>
               </span>
             </div>
@@ -205,15 +297,19 @@
 import db from "@/db";
 import firebase from "@/firebase";
 import { mapGetters, mapActions } from "vuex";
+import Boolean from "@/components/question_type/Boolean.vue";
 export default {
   name: "add-questions",
+  components: {
+    Boolean,
+  },
   created() {
     this.loadAssessments();
     this.loadQuestions();
   },
   computed: {
     ...mapGetters("assessments", ["assessments"]),
-    ...mapGetters("questions", ["getQuestions"]),
+    ...mapGetters("questions", ["questions"]),
     question_types() {
       let types = [
         "scale-meta",
@@ -223,6 +319,7 @@ export default {
         "kilos",
         "posture",
         "nested",
+        "boolean",
       ];
 
       return types;
@@ -254,44 +351,72 @@ export default {
     question: {
       title: "",
       description: "",
-      question_type: null,
+      question_type: "",
     },
     temp: {
-      start: 0,
-      end: 11,
+      start: null,
+      end: null,
       label: "",
+      color: null,
+      nested_question: null,
     },
     assessment: null,
     scale_meta: [],
     nested_questions: [],
     response: null,
+    saving: false,
+    isNestedMeta: false,
   }),
   methods: {
     ...mapActions("assessments", ["loadAssessments"]),
     ...mapActions("questions", ["loadQuestions"]),
+    addNestedQuestion() {
+      this.nested_questions.push(this.temp.nested_question);
+      this.temp.nested_question = null;
+    },
     addScaleMetaOption() {
-      this.scale_meta.push(this.temp);
-      this.temp = {
-        start: 0,
-        end: 11,
-        label: "",
-      };
+      this.scale_meta.push({
+        start: this.temp.start,
+        end: this.temp.end,
+        label: this.temp.label,
+        color: this.temp.color,
+      });
+      this.temp.start = 0;
+      this.temp.end = 11;
+      this.temp.label = "";
+      this.temp.color = null;
     },
     async handleForm() {
-      let assessment = db.collection("assessments").doc(this.assessment);
+      let insertQ = null;
+      if (this.question.question_type == "scale-meta")
+        insertQ = { ...this.question, scale_meta: this.scale_meta };
+      else if (this.question.question_type == "nested") {
+        let nestedRefs = [];
+        this.nested_questions.forEach((x) =>
+          nestedRefs.push(db.collection("questions").doc(x))
+        );
+        insertQ = { ...this.question, questions: nestedRefs };
+      } else {
+        insertQ = this.question;
+      }
+      let titleHash =
+        this.question.title.replace(" ", "") + new Date().getTime();
+      console.log(titleHash);
+      let newRef = db.collection("questions").doc(titleHash);
+      let newQuestion = await newRef.set(insertQ);
 
-      let insertQ =
-        this.question.question_type == "scale_meta"
-          ? { ...this.question, scale_meta: this.scale_meta }
-          : this.question;
+      // Add Question to Assessment
+      if (this.assessment) {
+        //Handle Standard Question
+        let assessment = db.collection("assessments").doc(this.assessment);
 
-      let newQuestion = await db.collection("questions").add(insertQ);
-
-      let update = await assessment.update({
-        questions: firebase.firestore.FieldValue.arrayUnion(newQuestion),
-      });
+        console.log(newQuestion);
+        let update = await assessment.update({
+          questions: firebase.firestore.FieldValue.arrayUnion(newRef),
+        });
+        this.response = update;
+      }
       this.resetForm();
-      this.response = update;
     },
     resetForm() {
       this.question = {
@@ -303,6 +428,8 @@ export default {
         start: 0,
         end: 11,
         label: "",
+        color: null,
+        nested_question: null,
       };
       this.assessment = null;
       this.scale_meta = [];

@@ -28,7 +28,7 @@
 <script>
 import MainView from "@/layouts/Main.vue";
 import MenuItem from "@/layouts/MenuItem.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "App",
   components: {
@@ -38,7 +38,12 @@ export default {
   data() {
     return {
       /* TODO: Change to Proper Auth/Roles */
-      adminEmails: ["u3160264@gmail.com"],
+      adminEmails: [
+        "u3160264@gmail.com",
+        "alistair.g.gibson@gmail.com",
+        "stevenmarkbell@gmail.com",
+        "john.miller.canberra@gmail.com",
+      ],
       menu: [
         {
           to: { name: "Home" },
@@ -63,9 +68,9 @@ export default {
       ],
     };
   },
-  created() {},
+
   computed: {
-    ...mapState("auth", ["user", "isLoggedIn"]),
+    ...mapGetters("auth", ["user", "isLoggedIn"]),
     pagetitle() {
       return this.$route.name;
     },

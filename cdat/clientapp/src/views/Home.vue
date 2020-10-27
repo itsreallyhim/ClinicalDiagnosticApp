@@ -52,6 +52,7 @@
       <template #link>View Assessments</template>
     </card>
     <card
+      class="col-span-2 sm:col-span-1"
       :to="{ name: 'Previous Assessments' }"
       v-if="isLoggedIn && previousAssessments.length > 0"
     >

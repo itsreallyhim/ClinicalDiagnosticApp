@@ -1,15 +1,18 @@
 <template>
   <div v-if="question != null">
     <div v-if="'start' in question.scale_meta[0]">
-      <div class="grid h-8 grid-cols-12 gap-2 my-2">
+      <div class="grid h-8 grid-cols-12 gap-2 mb-4">
         <p
-          class="flex items-center justify-center"
-          :class="colorClass(item.color)"
+          class="flex items-center justify-center text-xs text-center"
+          :class="item.color"
           v-for="(item, index) in question.scale_meta"
           :key="index"
           :style="{
-            'grid-column-start': item.start + 1,
-            'grid-column-end': item.end,
+            'grid-column-start':
+              Number.parseInt(item.start) == 0
+                ? 1
+                : Number.parseInt(item.start),
+            'grid-column-end': Number.parseInt(item.end) + 1,
           }"
         >
           {{ item.label }}
@@ -35,8 +38,8 @@
             v-for="(sub, index) in submeta(meta).items"
             :key="index"
             :style="{
-              'grid-column-start': sub.start + 1,
-              'grid-column-end': sub.end,
+              'grid-column-start': Number.parseInt(sub.start) + 1,
+              'grid-column-end': Number.parseInt(sub.end),
             }"
           >
             {{ sub.label }}
@@ -66,21 +69,6 @@ export default {
     submeta(array) {
       let { label, ...items } = array;
       return { label, items };
-    },
-    colorClass(color) {
-      let colorCode = "";
-      switch (color) {
-        case "red":
-          colorCode = "bg-red-400";
-          break;
-        case "green":
-          colorCode = "bg-green-400";
-          break;
-        default:
-          colorCode = "";
-          break;
-      }
-      return colorCode;
     },
   },
 };

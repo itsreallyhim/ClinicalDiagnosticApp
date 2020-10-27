@@ -30,7 +30,7 @@
             </dt>
             <dd>
               <div class="font-light leading-5 text-cool-gray-500">
-                {{ assessment.description }}
+                {{ assessment.excerpt }}
               </div>
             </dd>
           </dl>

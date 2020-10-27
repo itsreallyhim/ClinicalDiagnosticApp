@@ -1,7 +1,7 @@
 <template>
   <div>
     <textarea
-      class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
+      class="block w-full transition duration-150 ease-in-out form-textarea sm:text-sm sm:leading-5"
       name="text"
       id="text"
       v-model="textVal"
@@ -10,20 +10,25 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "text-response",
   props: {
-    text: {
-      String,
-      default: () => "",
+    question: {
+      Object,
     },
   },
   data: () => ({
     textVal: "",
   }),
-  model: {
-    prop: "text",
-    event: "change",
+  methods: {
+    ...mapMutations("responses", ["SET_ANSWER"]),
+    setAnswer() {
+      this.SET_ANSWER({
+        question: this.question.id,
+        text: this.textVal,
+      });
+    },
   },
 };
 </script>

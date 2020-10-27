@@ -23,7 +23,7 @@
           </div>
 
           <div
-            class="p-4 my-5 -mx-4 transition duration-500 shadow-inner "
+            class="p-4 my-5 -mx-4 transition duration-500 "
             :class="
               submitting || saved
                 ? 'bg-gray-500 opacity-50  h-32  overflow-hidden pointer-events-none '
@@ -40,6 +40,10 @@
                   <question :questionmodel="question"></question>
                 </div>
               </dl>
+            </div>
+
+            <div v-if="currentAssessment.scored">
+              Your Score: {{ responseTotal }}
             </div>
           </div>
           <button
@@ -99,6 +103,12 @@ export default {
     ...mapGetters("responses", ["responses", "currentResponse", "status"]),
     otherAssessments() {
       return this.assessments.filter((x) => x.id != this.$route.params.formID);
+    },
+    responseTotal() {
+      return this.currentResponse.responses.reduce(
+        (total, response) => (total += response.answer),
+        0
+      );
     },
   },
   methods: {
