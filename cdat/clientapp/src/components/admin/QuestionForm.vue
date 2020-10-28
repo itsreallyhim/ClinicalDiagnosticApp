@@ -504,20 +504,17 @@ export default {
 
       insertQ = { ...insertQ, ...this.question };
 
-      console.log(insertQ);
-
       let titleHash =
         this.question.title.replace(" ", "") + new Date().getTime();
 
       let newRef = db.collection("questions").doc(titleHash);
-      let newQuestion = await newRef.set(insertQ);
+      await newRef.set(insertQ);
 
       // Add Question to Assessment
       if (this.assessment) {
         //Handle Standard Question
         let assessment = db.collection("assessments").doc(this.assessment);
 
-        console.log(newQuestion);
         let update = await assessment.update({
           questions: firebase.firestore.FieldValue.arrayUnion(newRef),
         });

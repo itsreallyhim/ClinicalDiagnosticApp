@@ -177,7 +177,7 @@ export default {
   methods: {
     dropFile(event) {
       this.dropFileBlob = event.target.files[0];
-      console.log(this.dropFileBlob);
+      // console.log(this.dropFileBlob);
       this.capture(this.dropFileBlob);
     },
     async hasCamera() {

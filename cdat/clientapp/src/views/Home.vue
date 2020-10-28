@@ -72,7 +72,7 @@
 
     <card
       :to="{ name: 'Assessment', params: { formID: 'd4tlCXEdIs9HSsvzbdRZ' } }"
-      v-if="profile.waiver == null && isLoggedIn"
+      v-if="profile && 'waiver' in profile  == null && isLoggedIn"
       class="bg-red-500"
     >
       <template #title>Complete the Health Waiver</template>

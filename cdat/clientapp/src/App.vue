@@ -71,6 +71,7 @@ export default {
 
   computed: {
     ...mapGetters("auth", ["user", "isLoggedIn"]),
+    ...mapGetters("user", ["role"]),
     pagetitle() {
       return this.$route.name;
     },

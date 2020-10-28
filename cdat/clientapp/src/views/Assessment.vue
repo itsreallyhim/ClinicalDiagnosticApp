@@ -11,6 +11,14 @@
           Loading Questions
         </p>
       </div>
+      <div
+        v-else-if="
+          currentAssessment.id != 'd4tlCXEdIs9HSsvzbdRZ' &&
+            profile.waiver == false
+        "
+      >
+        Complete wavier
+      </div>
       <div v-else>
         <form @submit.prevent="submitResponse">
           <div>
@@ -95,6 +103,7 @@ export default {
     status: "updateStatus",
   },
   computed: {
+    ...mapGetters("user", ["profile"]),
     ...mapGetters("assessments", [
       "assessments",
       "currentAssessment",
@@ -133,7 +142,7 @@ export default {
 
       /* TODO: Move this to where a better place*/
       if (this.currentAssessment.id == "d4tlCXEdIs9HSsvzbdRZ") {
-        this.setProfile({ waiver: true });
+        this.setProfile({ waiver: true }, { merge: true });
       }
 
       this.submitting = false;

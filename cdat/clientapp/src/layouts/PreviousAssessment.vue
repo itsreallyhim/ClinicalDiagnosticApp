@@ -173,7 +173,6 @@ export default {
       return append;
     },
     getImage(imagePath) {
-      console.log("path", imagePath);
       if (imagePath != undefined) {
         let imageRef = storage.child(imagePath);
 

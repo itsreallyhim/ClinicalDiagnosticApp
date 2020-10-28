@@ -1,7 +1,10 @@
 <template>
-  <div class="flex">
+  <div
+    class="flex"
+    @click="selected = !selected"
+    @keypress.prevent.space="selected = !selected"
+  >
     <span
-      @click="selected = !selected"
       role="checkbox"
       tabindex="0"
       :aria-checked="selected"
@@ -60,20 +63,26 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "boolean",
-  model: {
-    prop: "value",
-    event: "change",
-  },
+
   data: () => ({
     selected: false,
   }),
-  props: ["value"],
+  props: ["question"],
 
   watch: {
-    selected: function(newVal) {
-      this.$emit("change", newVal);
+    selected: "setAnswer",
+  },
+
+  methods: {
+    ...mapMutations("responses", ["SET_ANSWER"]),
+    setAnswer() {
+      this.SET_ANSWER({
+        question: this.question.id,
+        answer: this.iValue ? 1 : 0,
+      });
     },
   },
 };

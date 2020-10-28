@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid gap-4 sm:grid-cols-2">
       <card
         class="mt-16"
         :to="{ name: 'Update Profile' }"
@@ -39,7 +39,7 @@
       </card>
     </div>
     <div
-      class="grid grid-cols-3 gap-4 my-4 text-sm"
+      class="grid gap-4 my-4 text-sm sm:grid-cols-3"
       v-if="$route.name == 'Profile'"
     >
       <static-card class="">
