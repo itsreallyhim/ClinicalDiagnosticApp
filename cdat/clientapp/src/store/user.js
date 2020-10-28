@@ -39,6 +39,26 @@ const actions = {
       .doc(user.uid)
       .set({ profile: userProfile }, merge);
   },
+
+  unlockAccount(_, unlockCode) {
+    const user = firebase.auth().currentUser;
+
+    db.collection("settings")
+      .doc("verificationCode")
+      .get()
+      .then((x) => x.data())
+      .then((x) => {
+        console.log(x);
+        if (unlockCode == x.code) {
+          db.collection("users")
+            .doc(user.uid)
+            .set(
+              { role: db.collection("roles").doc("patient") },
+              { merge: true }
+            );
+        }
+      });
+  },
 };
 const mutations = {
   // SET_PROFILE(state, profile) {

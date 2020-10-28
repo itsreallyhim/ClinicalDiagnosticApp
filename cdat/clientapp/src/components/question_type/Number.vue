@@ -66,6 +66,7 @@ export default {
       this.SET_ANSWER({
         question: this.question.id,
         answer: this.iValue,
+        independent: true,
       });
     },
   },

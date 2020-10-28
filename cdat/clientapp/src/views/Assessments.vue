@@ -34,6 +34,10 @@ export default {
   methods: {
     ...mapActions("assessments", ["loadAssessments"]),
   },
+
+  beforeRouteEnter(to, from, next) {
+    next();
+  },
 };
 </script>
 

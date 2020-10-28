@@ -24,10 +24,37 @@
       </template>
       <template #link>Login Now</template>
     </card>
+
+    <static-card
+      v-if="isLoggedIn && role && role.id == 'onboarding'"
+      class="h-56 col-span-2 text-white bg-blue"
+    >
+      <template #title>Welcome</template>
+      <template #description>
+        <p class="mt-3">Unlock your account to complete your assesments.</p>
+        <form @submit.prevent="unlock">
+          <input
+            required
+            type="text"
+            name="unlockCode"
+            id="unlockCode"
+            class="my-4 text-blue form-input"
+            placeholder="Enter your unlock code."
+            v-model="unlockCode"
+          />
+          <button
+            class="inline-flex ml-2 font-medium text-white border border-transparent border-white rounded-md form-input bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
+          >
+            Submit
+          </button>
+        </form>
+      </template>
+    </static-card>
+
     <card
       class="col-span-2 text-white bg-blue"
       :to="{ name: 'Assessments' }"
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && role && role.id != 'onboarding'"
     >
       <template #title>Welcome, {{ user.displayName }}</template>
       <template #description>
@@ -72,7 +99,9 @@
 
     <card
       :to="{ name: 'Assessment', params: { formID: 'd4tlCXEdIs9HSsvzbdRZ' } }"
-      v-if="profile && 'waiver' in profile == null && isLoggedIn"
+      v-if="
+        (profile == null || (profile && !('waiver' in profile))) && isLoggedIn
+      "
       class="bg-red-500"
     >
       <template #title>Complete the Health Waiver</template>
@@ -88,21 +117,29 @@
 <script>
 // @ is an alias to /src
 import Card from "@/layouts/Card.vue";
+import StaticCard from "@/layouts/StaticCard.vue";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
     Card,
+    StaticCard,
   },
   created() {
-    this.bindPreviousAssessments();
+    if (this.isLoggedIn) this.bindPreviousAssessments();
   },
   methods: {
-    ...mapActions("user", ["bindPreviousAssessments"]),
+    ...mapActions("user", ["bindPreviousAssessments", "unlockAccount"]),
+    unlock() {
+      this.unlockAccount(this.unlockCode);
+    },
   },
   computed: {
-    ...mapGetters("user", ["profile", "previousAssessments"]),
+    ...mapGetters("user", ["profile", "role", "previousAssessments"]),
     ...mapGetters("auth", ["user", "isLoggedIn"]),
   },
+  data: () => ({
+    unlockCode: null,
+  }),
 };
 </script>

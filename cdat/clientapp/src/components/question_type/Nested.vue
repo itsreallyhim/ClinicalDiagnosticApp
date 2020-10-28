@@ -2,10 +2,10 @@
   <div class="">
     <div class="mb-8" v-for="(question, index) in questions" :key="index">
       <dt class="">
-        <h4 class="text-sm font-medium leading-5">
+        <h4 class="font-medium leading-5 ">
           {{ question.title }}
         </h4>
-        <p class="text-xs text-gray-500">{{ question.description }}</p>
+        <p class="text-sm text-gray-500">{{ question.description }}</p>
       </dt>
       <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
         <component

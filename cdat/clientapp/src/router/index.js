@@ -98,6 +98,7 @@ router.beforeEach((to, from, next) => {
   /*if (to.name == "Login" && store.state.auth.isLoggedIn == true)
     next({ name: "Home" });
   else */
+
   if (to.meta.guest == false && store.state.auth.isLoggedIn == false)
     next({ name: "Login" });
   else next();

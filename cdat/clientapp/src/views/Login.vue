@@ -13,7 +13,7 @@
                 type="submit"
                 class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-indigo active:bg-blue"
               >
-                Log In with Google
+                Log In or Register with Google
               </button>
             </span>
           </form>
@@ -25,7 +25,7 @@
               </div>
               <div class="relative flex justify-center text-sm leading-5">
                 <span class="px-2 text-gray-500 bg-white">
-                  No account? Register Here
+                  No account? Register via Email Here
                 </span>
               </div>
             </div>
@@ -37,7 +37,7 @@
                   type="submit"
                   class="flex justify-center w-full px-4 py-2 text-sm font-medium text-indigo-900 transition duration-150 ease-in-out bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:outline-none focus:border-indigo-400 focus:shadow-outline-indigo active:bg-indigo-400"
                 >
-                  Register
+                  Register via Email
                 </router-link>
               </span>
             </div>

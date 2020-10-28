@@ -10,10 +10,16 @@ firebase.auth().onAuthStateChanged((user) => {
       displayName: user.displayName,
       email: user.email,
       photo: user.photoURL,
+      role:
+        user.email == "u3160264@gmail.com"
+          ? db.collection("roles").doc("admin")
+          : db.collection("roles").doc("onboarding"),
     };
+
     db.collection("users")
       .doc(dbProfile.id)
       .set(dbProfile, { merge: true });
+
     store.commit("auth/setUser", dbProfile);
     store.dispatch("user/linkProfile");
     if (router.currentRoute.name == "Login") {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex"
+    class="inline-flex items-center justify-center px-8 py-8 bg-white w-60"
     @click="selected = !selected"
     @keypress.prevent.space="selected = !selected"
   >
@@ -81,7 +81,8 @@ export default {
     setAnswer() {
       this.SET_ANSWER({
         question: this.question.id,
-        answer: this.iValue ? 1 : 0,
+        answer: this.selected ? 1 : 0,
+        independent: true,
       });
     },
   },

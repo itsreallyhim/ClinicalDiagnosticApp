@@ -49,6 +49,7 @@
                 <select
                   v-model="userProfile.role"
                   id="role"
+                  :readonly="saved"
                   class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md shadow-sm form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
                 >
                   <option value="patient">Patient</option>
@@ -70,6 +71,7 @@
                   v-model="userProfile.contactNumber"
                   id="contactnumber"
                   type="text"
+                  :readonly="saved"
                   placeholder="Contact Number"
                   class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
                 />
@@ -77,9 +79,15 @@
             </div>
             <button
               type="submit"
+              :disabled="saved"
+              :class="
+                saved || saving
+                  ? 'cursor-not-allowed bg-opacity-50 hover:bg-opacity-50'
+                  : ''
+              "
               class="justify-center max-w-sm px-4 py-2 mt-8 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
             >
-              Save Profile
+              <span>{{ saved ? "Saved" : "Save Profile" }}</span>
             </button>
           </form>
         </div>
@@ -96,7 +104,7 @@
           </p>
         </div>
         <div class="mt-5 md:mt-0 md:col-span-2">
-          <form @submit.prevent="setProfile(userProfile)">
+          <form @submit.prevent="saveProfile">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-4">
                 <label
@@ -121,6 +129,7 @@
                 <input
                   v-model="userProfile.gender"
                   id="gender"
+                  :readonly="saved"
                   type="text"
                   placeholder="Gender"
                   class="block w-full px-3 py-2 mt-1 text-sm transition duration-150 ease-in-out border border-gray-300 rounded-md shadow-sm form-input focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-xs sm:leading-5"
@@ -140,6 +149,7 @@
                     name="weight"
                     id="weight"
                     min="0"
+                    :readonly="saved"
                     v-model="userProfile.kilos"
                   />
 
@@ -163,6 +173,7 @@
                   <input
                     class="block w-full pr-12 form-input pl-7 sm:text-sm sm:leading-5"
                     type="number"
+                    :readonly="saved"
                     name="bfp"
                     id="bfp"
                     min="0"
@@ -188,6 +199,7 @@
                 >
                 <div class="relative mt-1 rounded-md shadow-sm">
                   <input
+                    :readonly="saved"
                     class="block w-full pr-12 form-input pl-7 sm:text-sm sm:leading-5"
                     type="number"
                     name="height"
@@ -207,10 +219,17 @@
               </div>
             </div>
             <button
+              :disabled="saved"
+              :class="
+                saved || saving
+                  ? 'cursor-not-allowed bg-opacity-50 hover:bg-opacity-50'
+                  : ''
+              "
               type="submit"
               class="justify-center max-w-sm px-4 py-2 mt-8 text-sm font-medium text-white transition duration-150 ease-in-out border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
+              @click="saveProfile"
             >
-              Save Profile
+              <span>{{ saved ? "Saved" : "Save Profile" }}</span>
             </button>
           </form>
         </div>
@@ -236,9 +255,17 @@ export default {
       bpf: null,
       height: null,
     },
+    saved: false,
+    saving: false,
   }),
   methods: {
     ...mapActions("user", ["setProfile"]),
+    saveProfile() {
+      this.saving = true;
+      this.setProfile(this.userProfile);
+      this.saving = false;
+      this.saved = true;
+    },
   },
   mounted() {
     if (this.profile != undefined) {

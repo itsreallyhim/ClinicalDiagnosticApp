@@ -8,6 +8,7 @@ import firebase from "@/firebase";
 import "@/auth";
 import "@/storage";
 import "@/assets/style.css";
+import "@/assets/fontawesome";
 
 import { firestorePlugin } from "vuefire";
 import router from "./router";

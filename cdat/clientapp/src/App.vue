@@ -16,10 +16,9 @@
       </template>
       <template #login>
         <button @click.prevent="logout" v-if="isLoggedIn">Logout</button>
-        <button @click.prevent="login" v-if="!isLoggedIn">Log In</button>
-        <div v-if="user && adminEmails.includes(user.email)">
-          <router-link :to="{ name: 'Admin' }">Admin</router-link>
-        </div>
+        <router-link v-if="!isLoggedIn" :to="{ name: 'Login' }"
+          >Log In</router-link
+        >
       </template>
       <router-view />
     </main-view>
@@ -37,13 +36,6 @@ export default {
   },
   data() {
     return {
-      /* TODO: Change to Proper Auth/Roles */
-      adminEmails: [
-        "u3160264@gmail.com",
-        "alistair.g.gibson@gmail.com",
-        "stevenmarkbell@gmail.com",
-        "john.miller.canberra@gmail.com",
-      ],
       menu: [
         {
           to: { name: "Home" },
@@ -79,16 +71,14 @@ export default {
   methods: {
     ...mapActions("auth", ["login", "logout"]),
   },
-  watch: {
-    role(role) {
-      if (role && role.id == "admin") {
-        this.menu.push({
-          to: { name: "Admin" },
-          name: "Admin",
-          active: this.$route.name == "Admin",
-        });
-      }
-    },
+  created() {
+    if (this.role && this.role.id == "admin") {
+      this.menu.push({
+        to: { name: "Admin" },
+        name: "Admin",
+        active: this.$route.name == "Admin",
+      });
+    }
   },
 };
 </script>

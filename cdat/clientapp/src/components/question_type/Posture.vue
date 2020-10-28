@@ -1,5 +1,5 @@
 <template>
-  <div class="grid p-4 mt-2 bg-white rounded-sm shadow-sm sm:grid-cols-2">
+  <div class="grid gap-4 p-4 mt-2 bg-white rounded-sm shadow-sm sm:grid-cols-2">
     <svg
       v-if="imagePath == ''"
       class="self-center justify-self-center"
@@ -91,15 +91,27 @@
           capture="photo"
           v-on:onReady="capture"
           v-if="!image"
+          class="mb-8"
         ></vue-camera>
-        <button @click.prevent="useCamera = false">
-          Upload an image instead
-        </button>
-        <button @click.prevent="resetCamera" v-if="image">Retry photo</button>
+        <div class="grid gap-4 mb-2 text-xs sm:grid-cols-2">
+          <button
+            @click.prevent="useCamera = false"
+            class="inline-flex justify-center float-right px-4 py-2 font-medium leading-5 text-white border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
+          >
+            Upload an image instead
+          </button>
+          <button
+            @click.prevent="resetCamera"
+            v-if="image"
+            class="inline-flex justify-center float-right px-4 py-2 font-medium leading-5 text-white border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
+          >
+            Retry photo
+          </button>
+        </div>
       </div>
 
       <label
-        v-else-if="image === null && !supportsCamera"
+        v-else-if="image === null && (!supportsCamera || !useCamera)"
         for="imageUpload"
         class="flex flex-col items-center content-center w-full h-full p-6 border-4 border-dashed rounded-lg"
       >
@@ -114,24 +126,31 @@
           type="file"
           class="w-full"
           name="imageUpload"
+          id="imageUpload"
           v-if="!image"
           @change.passive="dropFile"
           accept="image/*"
         />
       </label>
       <img :src="image" />
-      <button v-if="supportsCamera" @click="useCamera = true">
-        Capture from camera instead
-      </button>
-      <button
-        v-if="image"
-        @click="image = null"
-        class="px-4 py-1 my-2 text-xs rounded-sm shadow-xs bg-cool-gray-200"
-      >
-        Reset Image
-      </button>
+      <div class="grid gap-4 mt-2 text-xs sm:grid-cols-2">
+        <button
+          v-if="supportsCamera && !useCamera"
+          @click.prevent="useCamera = true"
+          class="inline-flex justify-center float-right px-4 py-2 font-medium leading-5 text-white border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
+        >
+          Capture from camera instead
+        </button>
+        <button
+          v-if="image"
+          @click="image = null"
+          class="inline-flex justify-center float-right px-4 py-2 font-medium leading-5 border border-transparent rounded-md text-cool-gray-700 bg-cool-gray-200 hover:bg-cool-gray-200 focus:outline-none focus:border-cobg-cool-gray-200 focus:shadow-outline-cobg-cool-gray-200 active:bg-cool-gray-200"
+        >
+          Reset Image
+        </button>
+      </div>
 
-      <pre>{{ status }}</pre>
+      <p class="mt-2">Status: {{ status }}</p>
     </div>
   </div>
 </template>
@@ -204,6 +223,7 @@ export default {
     resetCamera() {
       this.image = null;
       this.$refs.camera.resetStream();
+      this.status = "Image Cleared";
     },
     uploadImage(blob) {
       let imageRef = storage
@@ -243,6 +263,7 @@ export default {
       this.SET_ANSWER({
         question: this.question.id,
         image: this.imageUpload,
+        independent: true,
       });
     },
   },

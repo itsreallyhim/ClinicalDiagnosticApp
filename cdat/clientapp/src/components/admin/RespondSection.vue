@@ -75,17 +75,17 @@
             <thead>
               <tr>
                 <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
+                  class="w-2/6 px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                 >
                   Question
                 </th>
                 <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
+                  class="w-1/6 px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                 >
                   Answer
                 </th>
                 <th
-                  class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
+                  class="w-1/3 px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase bg-gray-50"
                 >
                   Comments
                 </th>
@@ -104,7 +104,9 @@
                 </td>
                 <td>
                   {{ answer.answer }}
-                  <div></div>
+                  <div v-if="answer.image">
+                    <img :src="images[answer.image]" alt="" class="h-52" />
+                  </div>
                 </td>
                 <td class="py-2 pr-2">
                   <textarea
@@ -140,6 +142,7 @@
 <script>
 import { v4 as genUUID } from "uuid";
 import { mapActions, mapGetters } from "vuex";
+import storage from "@/storage";
 import StaticCard from "@/layouts/StaticCard.vue";
 export default {
   name: "respond-section",
@@ -149,11 +152,33 @@ export default {
   mounted() {
     this.loadResponses();
   },
+  watch: {
+    responses() {
+      this.responses.forEach((element) => {
+        element.responses.forEach((answer) => {
+          if ("image" in answer) {
+            console.log("image", answer.image);
+            this.getImage(answer.image);
+          }
+        });
+      });
+    },
+  },
+  data: () => ({
+    images: {},
+  }),
   methods: {
     ...mapActions("responses", ["loadResponses"]),
     ...mapActions("comments", ["loadComments"]),
     uuid() {
       return genUUID();
+    },
+    getImage(imagePath) {
+      if (imagePath != undefined) {
+        let imageRef = storage.child(imagePath);
+
+        imageRef.getDownloadURL().then((url) => (this.images[imagePath] = url));
+      }
     },
   },
   computed: {

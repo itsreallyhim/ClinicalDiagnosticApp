@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="px-5 py-3 bg-cool-gray-50">
+    <div v-if="$slots.link" class="px-5 py-3 bg-cool-gray-50">
       <div class="text-sm leading-5 ">
         <slot name="link"></slot>
       </div>

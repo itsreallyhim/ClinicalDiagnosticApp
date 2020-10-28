@@ -13,8 +13,8 @@
       </div>
       <div
         v-else-if="
-          currentAssessment.id != 'd4tlCXEdIs9HSsvzbdRZ' &&
-            profile.waiver == true
+          $route.params.formID == 'd4tlCXEdIs9HSsvzbdRZ' ||
+            (profile && 'waiver' in profile && profile.waiver == true)
         "
       >
         <form @submit.prevent="submitResponse">
@@ -128,10 +128,11 @@ export default {
       return this.assessments.filter((x) => x.id != this.$route.params.formID);
     },
     responseTotal() {
-      return this.currentResponse.responses.reduce(
-        (total, response) => (total += response.answer),
-        0
-      );
+      return this.currentResponse.responses.reduce((total, response) => {
+        console.log(response.independent);
+        if (!response.independent) return (total += parseInt(response.answer));
+        else return total;
+      }, 0);
     },
   },
   methods: {
@@ -143,8 +144,10 @@ export default {
     ]),
     ...mapActions("user", ["setProfile"]),
     updateAssessment() {
+      console.log("route changed, updating assessment");
       this.setAssessment(this.$route.params.formID);
       this.createResponse(this.$route.params.formID);
+      this.emptyResponse();
     },
     updateStatus() {
       this.message = this.status;
@@ -165,18 +168,15 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    if (this.message != "Saved") {
-      const answer = window.confirm(
-        "Do you really want to leave? You will loose your current answers!"
-      );
-      if (answer) {
-        this.emptyResponse();
-        next();
-      } else {
-        next(false);
-      }
-    } else {
+    const answer = window.confirm(
+      "Do you really want to leave? You will loose your current answers!"
+    );
+    if (answer) {
+      this.submitting = false;
+      this.emptyResponse();
       next();
+    } else {
+      next(false);
     }
   },
 };

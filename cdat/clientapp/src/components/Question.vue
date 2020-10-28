@@ -2,14 +2,14 @@
   <div v-if="question == undefined">
     Loading
   </div>
-  <div class="mb-6 sm:grid sm:grid-cols-3 sm:gap-4" v-else>
+  <div class="mb-6  sm:grid sm:grid-cols-3 sm:gap-4" v-else>
     <dt class="">
-      <h3 class="text-sm font-medium leading-5">
+      <h3 class="font-medium leading-5 text-">
         {{ question.title }}
       </h3>
-      <p class="text-xs text-gray-500">{{ question.description }}</p>
+      <p class="text-sm text-gray-500">{{ question.description }}</p>
     </dt>
-    <dd class="mt-1 text-sm leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
+    <dd class="mt-1 leading-5 text-gray-900 sm:mt-0 sm:col-span-2">
       <component
         v-if="question.question_type != 'nested'"
         :is="question.question_type"

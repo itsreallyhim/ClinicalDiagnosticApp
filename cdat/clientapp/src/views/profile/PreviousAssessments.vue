@@ -31,25 +31,21 @@ export default {
   computed: {
     ...mapGetters("user", ["previousAssessments"]),
   },
-  data: () => ({
-    aggregateTypes: ["scale", "scale-meta", "custom-scale-meta"],
-  }),
+  data: () => ({}),
   methods: {
     ...mapActions("user", ["bindPreviousAssessments"]),
     result(previousAssessment) {
-      let responses = previousAssessment.responses.filter(
-        (x) =>
-          "answer" in x &&
-          this.aggregateTypes.includes(x.question.question_type)
-      );
+      let outOf = 0;
+      let value = previousAssessment.responses.reduce((total, response) => {
+        if (!response.independent) {
+          outOf += 10;
+          return (total += parseInt(response.answer));
+        } else {
+          return total;
+        }
+      }, 0);
 
-      let total = responses.length * 10;
-      let value = responses.reduce(
-        (total, x) => (total += parseInt(x.answer)),
-        0
-      );
-
-      return value + " /" + total;
+      return value + " /" + outOf;
     },
     tidyDate(previousAssessment) {
       return previousAssessment.created_at.toDate().toLocaleString("en-au");

@@ -54,10 +54,16 @@ const mutations = {
       };
       if (answer.answer) respObejct = { ...respObejct, answer: answer.answer };
       if (answer.image) respObejct = { ...respObejct, image: answer.image };
+      if (answer.independent)
+        respObejct = { ...respObejct, independent: answer.independent };
+      if (answer.text) respObejct = { ...respObejct, text: answer.text };
+
       state.currentResponse.responses.push(respObejct);
     } else {
       if (answer.answer) item.answer = answer.answer;
       if (answer.image) item.image = answer.image;
+      if (answer.independent) item.independent = answer.independent;
+      if (answer.text) item.text = answer.text;
     }
   },
   CREATE_RESPONSE(state, assessment) {

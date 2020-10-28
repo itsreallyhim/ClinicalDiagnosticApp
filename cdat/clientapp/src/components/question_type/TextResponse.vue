@@ -27,6 +27,7 @@ export default {
       this.SET_ANSWER({
         question: this.question.id,
         text: this.textVal,
+        independent: true,
       });
     },
   },
