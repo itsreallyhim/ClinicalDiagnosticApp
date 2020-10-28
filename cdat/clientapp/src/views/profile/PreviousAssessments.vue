@@ -18,12 +18,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import PreviousAssessment from "@/layouts/PreviousAssessment.vue";
 export default {
   name: "previous-assessments",
   components: {
     PreviousAssessment,
+  },
+  mounted() {
+    this.bindPreviousAssessments();
   },
   computed: {
     ...mapGetters("user", ["previousAssessments"]),
@@ -32,6 +35,7 @@ export default {
     aggregateTypes: ["scale", "scale-meta", "custom-scale-meta"],
   }),
   methods: {
+    ...mapActions("user", ["bindPreviousAssessments"]),
     result(previousAssessment) {
       let responses = previousAssessment.responses.filter(
         (x) =>

@@ -6,6 +6,7 @@ import user from "./user";
 import assessments from "./assessments";
 import responses from "./responses";
 import questions from "./questions";
+import comments from "./comments";
 
 Vue.use(Vuex);
 
@@ -26,5 +27,6 @@ export default new Vuex.Store({
     assessments,
     responses,
     questions,
+    comments,
   },
 });

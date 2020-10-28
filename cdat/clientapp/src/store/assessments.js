@@ -3,7 +3,7 @@ import db from "@/db";
 
 const state = {
   assessments: [],
-
+  assessmentNames: [],
   currentAssessmentID: null,
 };
 
@@ -20,6 +20,16 @@ const actions = {
   setAssessment: ({ commit }, assessmentID) => {
     commit("SET_ASSESSMENT", assessmentID);
   },
+
+  loadAssessmentNames: firestoreAction(({ bindFirestoreRef }) => {
+    return bindFirestoreRef(
+      "assessmentNames",
+      db.collection("assessments").orderBy("order"),
+      {
+        maxRefDepth: 1,
+      }
+    );
+  }),
 };
 
 const mutations = {
@@ -40,9 +50,8 @@ const getters = {
           .questions
       : null;
   },
-  assessments: (state) => {
-    return state.assessments;
-  },
+  assessments: (state) => state.assessments,
+  assessmentNames: (state) => state.assessmentNames,
 };
 
 export default {

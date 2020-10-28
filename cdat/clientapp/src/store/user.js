@@ -12,7 +12,6 @@ const state = {
 const actions = {
   linkProfile({ dispatch }) {
     dispatch("bindProfile");
-    dispatch("bindPreviousAssessments");
   },
   bindProfile: firestoreAction(({ bindFirestoreRef }) => {
     const user = firebase.auth().currentUser;
@@ -29,7 +28,7 @@ const actions = {
         .orderBy("created_at", "desc")
         .where("owner", "==", db.doc(`/users/${user.uid}`)),
       {
-        maxRefDepth: 2,
+        maxRefDepth: 1,
       }
     );
   }),

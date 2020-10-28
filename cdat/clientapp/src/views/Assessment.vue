@@ -14,12 +14,9 @@
       <div
         v-else-if="
           currentAssessment.id != 'd4tlCXEdIs9HSsvzbdRZ' &&
-            profile.waiver == false
+            profile.waiver == true
         "
       >
-        Complete wavier
-      </div>
-      <div v-else>
         <form @submit.prevent="submitResponse">
           <div>
             <h3 class="text-lg font-medium leading-6 text-gray-900">
@@ -75,6 +72,22 @@
           </div>
         </div>
       </div>
+      <div v-else>
+        <card
+          :to="{
+            name: 'Assessment',
+            params: { formID: 'd4tlCXEdIs9HSsvzbdRZ' },
+          }"
+          class="bg-red-500"
+        >
+          <template #title>Complete the Health Waiver</template>
+          <template #description
+            >Before you can complete any assessments, please complete the health
+            waiver.
+          </template>
+          <template #link>Complete Waiver</template>
+        </card>
+      </div>
     </div>
   </div>
 </template>
@@ -83,12 +96,13 @@
 import { mapGetters, mapActions } from "vuex";
 import Question from "@/components/Question.vue";
 import AssessmentCard from "@/layouts/AssessmentCard.vue";
-
+import Card from "@/layouts/Card.vue";
 export default {
   name: "AssessmentView",
   components: {
     Question,
     AssessmentCard,
+    Card,
   },
   created() {
     this.updateAssessment();

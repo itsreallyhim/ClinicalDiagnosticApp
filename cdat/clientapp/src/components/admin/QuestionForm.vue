@@ -87,7 +87,7 @@
                   >
                     <option
                       :value="assessment.id"
-                      v-for="(assessment, index) in assessments"
+                      v-for="(assessment, index) in assessmentNames"
                       :key="index"
                       >{{ assessment.title }}</option
                     >
@@ -344,7 +344,7 @@
                 <button
                   :disabled="saving"
                   type="submit"
-                  class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700"
+                  class="inline-flex justify-center px-4 py-2 text-sm font-medium leading-5 text-white border border-transparent rounded-md bg-blue hover:bg-blue focus:outline-none focus:border-blue focus:shadow-outline-blue active:bg-blue"
                 >
                   {{ !saving ? "Save" : "Saved" }}
                 </button>
@@ -372,11 +372,11 @@ export default {
     Boolean,
   },
   created() {
-    this.loadAssessments();
-    this.loadQuestions();
+    this.loadAssessmentNames();
+    // this.loadQuestions();
   },
   computed: {
-    ...mapGetters("assessments", ["assessments"]),
+    ...mapGetters("assessments", ["assessmentNames"]),
     ...mapGetters("questions", ["questions"]),
     question_types() {
       let types = [
@@ -444,7 +444,7 @@ export default {
     isNestedMeta: true,
   }),
   methods: {
-    ...mapActions("assessments", ["loadAssessments"]),
+    ...mapActions("assessments", ["loadAssessmentNames"]),
     ...mapActions("questions", ["loadQuestions"]),
     addScaleMetaGroup() {
       this.nested_meta.push({

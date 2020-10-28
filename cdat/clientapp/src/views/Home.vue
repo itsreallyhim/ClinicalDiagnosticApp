@@ -72,7 +72,7 @@
 
     <card
       :to="{ name: 'Assessment', params: { formID: 'd4tlCXEdIs9HSsvzbdRZ' } }"
-      v-if="profile && 'waiver' in profile  == null && isLoggedIn"
+      v-if="profile && 'waiver' in profile == null && isLoggedIn"
       class="bg-red-500"
     >
       <template #title>Complete the Health Waiver</template>
@@ -88,11 +88,17 @@
 <script>
 // @ is an alias to /src
 import Card from "@/layouts/Card.vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {
     Card,
+  },
+  created() {
+    this.bindPreviousAssessments();
+  },
+  methods: {
+    ...mapActions("user", ["bindPreviousAssessments"]),
   },
   computed: {
     ...mapGetters("user", ["profile", "previousAssessments"]),

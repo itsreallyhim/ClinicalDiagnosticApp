@@ -79,6 +79,17 @@ export default {
   methods: {
     ...mapActions("auth", ["login", "logout"]),
   },
+  watch: {
+    role(role) {
+      if (role && role.id == "admin") {
+        this.menu.push({
+          to: { name: "Admin" },
+          name: "Admin",
+          active: this.$route.name == "Admin",
+        });
+      }
+    },
+  },
 };
 </script>
 <style></style>

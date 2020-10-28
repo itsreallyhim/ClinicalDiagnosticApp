@@ -13,9 +13,9 @@ const state = {
 };
 
 const actions = {
-  bindResponses: firestoreAction(({ bindFirestoreRef }) => {
+  loadResponses: firestoreAction(({ bindFirestoreRef }) => {
     return bindFirestoreRef("responses", db.collection("responses"), {
-      maxRefDepth: 4,
+      maxRefDepth: 1,
     });
   }),
   createResponse: ({ commit }, assessment) => {

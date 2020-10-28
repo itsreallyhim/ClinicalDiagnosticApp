@@ -8,5 +8,15 @@ export default [
       guest: false,
       admin: true,
     },
+    
+  },
+  {
+    path: "/admin/manage-questions",
+    name: "Manage Questions",
+    component: () => import("@/views/admin/ManageQuestions.vue"),
+    meta: {
+      guest: false,
+      admin: true,
+    },
   },
 ];
