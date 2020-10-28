@@ -13,9 +13,9 @@ module.exports = {
       https: true,
     },
   },
-  configureWebpack: (config) => {
-    return {
-      plugins: [new webpack.HotModuleReplacementPlugin()],
-    };
-  },
+  // configureWebpack: (config) => {
+  //   return {
+  //     plugins: [new webpack.HotModuleReplacementPlugin()],
+  //   };
+  // },
 };

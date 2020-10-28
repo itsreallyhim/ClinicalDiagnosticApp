@@ -118,6 +118,7 @@ export default {
       "saveResponse",
       "emptyResponse",
     ]),
+    ...mapActions("user", ["setProfile"]),
     updateAssessment() {
       this.setAssessment(this.$route.params.formID);
       this.createResponse(this.$route.params.formID);
@@ -129,20 +130,30 @@ export default {
       this.submitting = true;
       this.message = "Saving";
       this.saveResponse();
+
+      /* TODO: Move this to where a better place*/
+      if (this.currentAssessment.id == "d4tlCXEdIs9HSsvzbdRZ") {
+        this.setProfile({ waiver: true });
+      }
+
       this.submitting = false;
       this.saved = true;
       this.message = "Saved";
     },
   },
   beforeRouteLeave(to, from, next) {
-    const answer = window.confirm(
-      "Do you really want to leave? You will loose your current answers!"
-    );
-    if (answer) {
-      this.emptyResponse();
-      next();
+    if (this.message != "Saved") {
+      const answer = window.confirm(
+        "Do you really want to leave? You will loose your current answers!"
+      );
+      if (answer) {
+        this.emptyResponse();
+        next();
+      } else {
+        next(false);
+      }
     } else {
-      next(false);
+      next();
     }
   },
 };

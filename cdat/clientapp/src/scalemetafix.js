@@ -58,7 +58,9 @@ let scale_meta = [
 
 let item = db
   .collection("questions")
-  .doc("Painexperienced when right buttock massaged vigorously1603799265295");
+  .doc(
+    "Giveyourself a personal rating on how well you performed the task.1603836584724"
+  );
 
 let update = item.set({ scale_meta: scale_meta }, { merge: true });
 

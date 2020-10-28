@@ -69,6 +69,19 @@
       <template #description>Please complete your profile.</template>
       <template #link>Update your profile </template>
     </card>
+
+    <card
+      :to="{ name: 'Assessment', params: { formID: 'd4tlCXEdIs9HSsvzbdRZ' } }"
+      v-if="profile.waiver == null && isLoggedIn"
+      class="bg-red-500"
+    >
+      <template #title>Complete the Health Waiver</template>
+      <template #description
+        >Before you can complete any assessments, please complete the health
+        waiver.</template
+      >
+      <template #link>Complete Waiver</template>
+    </card>
   </div>
 </template>
 

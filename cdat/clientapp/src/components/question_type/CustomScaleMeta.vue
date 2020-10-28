@@ -1,5 +1,5 @@
 <template>
-  <div v-if="question != null">
+  <div v-if="question != null && question.scale_meta != ''">
     <div v-if="'start' in question.scale_meta[0]">
       <div class="grid h-8 grid-cols-12 gap-2 mb-4">
         <p
@@ -25,22 +25,28 @@
       <div
         v-for="(meta, index) in question.scale_meta"
         :key="index"
-        class="grid items-center col-span-12 gap-2 grid-cols-13 "
-        :class="index != 0 ? 'border-t' : ''"
+        class="grid items-center grid-cols-12 col-span-12 gap-2 "
+        :class="[
+          index != 0 ? 'border-t' : '',
+          submeta(meta).label == '' ? '' : '',
+        ]"
       >
         <p class="text-xs font-semibold ">
           {{ submeta(meta).label }}
         </p>
         <div
-          class="grid items-center grid-cols-11 col-span-12 gap-2 justify-items-center "
+          class="grid items-center grid-cols-11 col-span-12 col-start-2 gap-2 justify-items-center "
         >
           <p
             class="w-full py-2 text-center"
             v-for="(sub, index) in submeta(meta).items"
             :key="index"
             :style="{
-              'grid-column-start': Number.parseInt(sub.start) + 1,
-              'grid-column-end': Number.parseInt(sub.end),
+              'grid-column-start':
+                Number.parseInt(sub.start) == 0
+                  ? 1
+                  : Number.parseInt(sub.start),
+              'grid-column-end': Number.parseInt(sub.end) + 1,
             }"
           >
             {{ sub.label }}

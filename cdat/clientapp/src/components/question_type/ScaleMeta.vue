@@ -21,12 +21,23 @@
 
       <scale :question="question"></scale>
     </div>
-    <div v-else class="grid grid-cols-13 ">
+    <div
+      v-else
+      class="grid "
+      :class="
+        question.scale_meta[0].label == '' ? 'grid-cols-12' : 'grid-cols-13'
+      "
+    >
       <div
         v-for="(meta, index) in question.scale_meta"
         :key="index"
-        class="grid items-center col-span-12 gap-2 grid-cols-13 "
-        :class="index != 0 ? 'border-t' : ''"
+        class="grid items-center gap-2 "
+        :class="[
+          index != 0 ? 'border-t' : '',
+          submeta(meta).label == ''
+            ? 'grid-cols-11 col-span-11'
+            : 'col-span-12 grid-cols-13',
+        ]"
       >
         <p class="text-xs font-semibold ">
           {{ submeta(meta).label }}
@@ -40,7 +51,7 @@
             :key="index"
             :style="{
               'grid-column-start': Number.parseInt(sub.start) + 1,
-              'grid-column-end': Number.parseInt(sub.end),
+              'grid-column-end': Number.parseInt(sub.end) + 1,
             }"
           >
             {{ sub.label }}
@@ -48,7 +59,8 @@
         </div>
       </div>
       <scale
-        class="col-span-12 col-start-2 border-t-0"
+        class="col-span-12 border-t-0"
+        :class="question.scale_meta[0].label == '' ? '' : 'col-start-2'"
         :question="question"
       ></scale>
     </div>

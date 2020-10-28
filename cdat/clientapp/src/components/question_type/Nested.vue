@@ -29,6 +29,7 @@ import TextResponse from "@/components/question_type/TextResponse.vue";
 import Posture from "@/components/question_type/Posture.vue";
 import Boolean from "@/components/question_type/Boolean.vue";
 import CustomScale from "@/components/question_type/CustomScale.vue";
+import CustomScaleMeta from "@/components/question_type/CustomScaleMeta.vue";
 export default {
   name: "Nested",
   props: ["questions"],
@@ -42,6 +43,7 @@ export default {
     TextResponse,
     Boolean,
     CustomScale,
+    CustomScaleMeta
   },
 };
 </script>
