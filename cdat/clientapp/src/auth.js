@@ -5,33 +5,49 @@ import router from "@/router";
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     if (user.user) user = user.user;
-    const dbProfile = {
-      id: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      photo: user.photoURL,
-      role:
-        user.email == "u3160264@gmail.com"
-          ? db.collection("roles").doc("admin")
-          : db.collection("roles").doc("onboarding"),
-    };
 
-    db.collection("users")
-      .doc(dbProfile.id)
-      .set(dbProfile, { merge: true });
+    //let adminEmails = ["john.miller.canberra@gmail.com", "u3160264@gmail.com"]
+    let role = null;
+    db.collection('users').doc(user.uid).get().then(x => x.data()).then(
+      x => {
+        console.log(x.role); role = x.role.id || null;
 
-    store.commit("auth/setUser", dbProfile);
-    store.dispatch("user/linkProfile");
-    if (router.currentRoute.name == "Login") {
-      router.push("/");
-    } else if ("formID" in router.currentRoute.params) {
-      store.dispatch(
-        "responses/createResponse",
-        router.currentRoute.params.formID
-      );
-    }
+
+
+
+
+        console.log(role);
+        const dbProfile = {
+          id: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          role:
+            role != null
+              ? db.collection("roles").doc(role)
+              : db.collection("roles").doc("onboarding"),
+        };
+
+        db.collection("users")
+          .doc(dbProfile.id)
+          .set(dbProfile, { merge: true });
+
+        store.commit("auth/setUser", dbProfile);
+        store.dispatch("user/linkProfile");
+        if (router.currentRoute.name == "Login") {
+          router.push("/");
+        } else if ("formID" in router.currentRoute.params) {
+          store.dispatch(
+            "responses/createResponse",
+            router.currentRoute.params.formID
+          );
+        }
+
+
+      });
   } else {
     store.commit("auth/setUser", null);
     router.push({ name: "Home" });
   }
+
 });

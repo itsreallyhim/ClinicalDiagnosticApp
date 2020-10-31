@@ -19,7 +19,7 @@ const db = firebase.firestore();
 
 let item = db.collection("assessments").doc("nM1P7IULPVYULlu70CzJ");
 
-let result = item
+item
   .get()
   .then((item) => item.data())
   .then((item) =>

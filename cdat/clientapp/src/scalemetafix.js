@@ -62,9 +62,9 @@ let item = db
     "Giveyourself a personal rating on how well you performed the task.1603836584724"
   );
 
-let update = item.set({ scale_meta: scale_meta }, { merge: true });
+ item.set({ scale_meta: scale_meta }, { merge: true });
 
-let result = item
+ item
   .get()
   .then((item) => item.data())
   .then((item) => console.log(item));
